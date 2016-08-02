@@ -1,0 +1,57 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+returnMain	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnMain = function () {$/;"	function	line:6
+getBookingNo	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var getBookingNo = function () {$/;"	function	line:11
+deleteCsbk1	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.deleteCsbk1 = function (index, job) {$/;"	function	line:55
+showFilterBar	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showFilterBar = function () {$/;"	function	line:60
+expression	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                expression: function (filterText, value, index, array) {$/;"	function	line:63
+update	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                update: function (filteredItems, filterText) {$/;"	function	line:67
+refreshItems	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.refreshItems = function () {$/;"	function	line:76
+$timeout	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            $timeout(function () {$/;"	function	line:81
+gotoDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoDetail = function (job) {$/;"	function	line:87
+returnSearch	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnSearch = function () {$/;"	function	line:104
+gotoDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoDetail = function (job) {$/;"	function	line:109
+showCamera	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var showCamera = function (type) {$/;"	function	line:138
+showTobk	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var showTobk = function () {$/;"	function	line:186
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:212
+checkStatusCode	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var checkStatusCode = function (StatusCode) {$/;"	function	line:262
+SMS	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var SMS = function () {$/;"	function	line:269
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            var success = function () {};$/;"	function	line:282
+error	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            var error = function (e) {};$/;"	function	line:283
+takePhoto	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.takePhoto = function () {$/;"	function	line:303
+reCapture	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.reCapture = function () {$/;"	function	line:308
+uploadPhoto	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.uploadPhoto = function () {$/;"	function	line:312
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            ApiService.Post(objUri, jsonData, true).then(function success(result) {$/;"	function	line:318
+showActionSheet	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showActionSheet = function () {$/;"	function	line:324
+cancel	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                cancel: function () {$/;"	function	line:334
+buttonClicked	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                buttonClicked: function (index) {$/;"	function	line:337
+closeModal	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.closeModal = function () {$/;"	function	line:362
+showActionSheet1	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showActionSheet1 = function () {$/;"	function	line:365
+cancel	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                cancel: function () {$/;"	function	line:376
+buttonClicked	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                buttonClicked: function (index) {$/;"	function	line:379
+gotoConfirm	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoConfirm = function () {$/;"	function	line:389
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                ApiService.Get(objUri, false).then(function success(result) {$/;"	function	line:428
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                        ApiService.Get(objUri, false).then(function success(result) {});$/;"	function	line:435
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:445
+returnList	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnList = function () {$/;"	function	line:482
+checkQty	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.checkQty = function (csbk2) {$/;"	function	line:485
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:493
+resizeCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        function resizeCanvas() {$/;"	function	line:551
+getSignature	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var getSignature = function () {$/;"	function	line:557
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:560
+returnList	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnList = function () {$/;"	function	line:568
+returnDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnDetail = function () {$/;"	function	line:571
+clearCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.clearCanvas = function () {$/;"	function	line:578
+saveCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.saveCanvas = function () {$/;"	function	line:582
+confirm	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.confirm = function () {$/;"	function	line:588
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:602
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Post(objUri, jsonData, true).then(function success(result) {});$/;"	function	line:608
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:622
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                    ApiService.Get(objUri, false).then(function success(result) {});$/;"	function	line:629
+success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Get(objUri, true).then(function success(result) {});$/;"	function	line:644
+returnDoc	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnDoc = function () {$/;"	function	line:661
+onSuccessItem	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        uploader.onSuccessItem = function (fileItem, response, status, headers) {$/;"	function	line:672
