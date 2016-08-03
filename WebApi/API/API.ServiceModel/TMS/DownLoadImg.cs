@@ -134,21 +134,21 @@ namespace WebApi.ServiceModel.TMS
             return Result;
         }
       
-        public List<Csbk1> Get_Jmjm1_Doc_List(DownLoadImg request)
-        {
-            List<Csbk1> Result = null;
-            try
-            {
-                using (var db = DbConnectionFactory.OpenDbConnection())
-                {
-                    string strSQL = "SELECT Top 1 JobNo " +
-                                    "FROM csbk1 Where JobNo='" + request.JobNo + "' And IsNull(StatusCode,'')<>'DEL'";
-                    Result = db.Select<Csbk1>(strSQL);
-                }
-            }
-            catch { throw; }
-            return Result;
-        }
+        //public List<Csbk1> Get_Jmjm1_Doc_List(DownLoadImg request)
+        //{
+        //    List<Csbk1> Result = null;
+        //    try
+        //    {
+        //        using (var db = DbConnectionFactory.OpenDbConnection())
+        //        {
+        //            string strSQL = "SELECT Top 1 JobNo " +
+        //                            "FROM csbk1 Where JobNo='" + request.JobNo + "' And IsNull(StatusCode,'')<>'DEL'";
+        //            Result = db.Select<Csbk1>(strSQL);
+        //        }
+        //    }
+        //    catch { throw; }
+        //    return Result;
+        //}
     }
 
 }

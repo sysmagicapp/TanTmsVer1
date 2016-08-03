@@ -36,34 +36,10 @@ namespace WebApi.ServiceInterface
 												return ecr;
 								}
 
-        public ServiceModel.TMS.Csbk_Logic tms_Tobk_Logic { get; set; }
-        public object Any(ServiceModel.TMS.Csbk request)
-        {
-            CommonResponse ecr = new CommonResponse();
-            ecr.initial();
-            try
-            {
-                ServiceInterface.TMS.TableService ts = new ServiceInterface.TMS.TableService();
-                ts.TS_Tobk(auth,request, tms_Tobk_Logic, ecr, this.Request.Headers.GetValues("Signature"), this.Request.RawUrl);             
-            }
-            catch (Exception ex) { cr(ecr, ex); }
-            return ecr;
-        }
+       
 
 
-        public ServiceModel.TMS.Slcr_Logic tms_sclr_Logic  { get; set; }
-        public object Any(ServiceModel.TMS.Slcr request)
-        {
-            CommonResponse ecr = new CommonResponse();
-            ecr.initial();
-            try
-            {
-                ServiceInterface.TMS.TableService ts = new ServiceInterface.TMS.TableService();
-             ts.TS_Slcr(auth, request, tms_sclr_Logic, ecr, this.Request.Headers.GetValues("Signature"), this.Request.RawUrl);
-            }
-            catch (Exception ex) { cr(ecr, ex); }
-            return ecr;
-        }
+       
 
         public ServiceModel.TMS.Rcbp_Logic tms_rcbp_Logic { get; set; }
         public object Any(ServiceModel.TMS.Rcbp request)

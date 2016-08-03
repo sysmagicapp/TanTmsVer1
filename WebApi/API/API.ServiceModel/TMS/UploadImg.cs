@@ -90,19 +90,19 @@ namespace WebApi.ServiceModel.TMS
                             i = 0;
                         }
                     }
-                    if (i.Equals(0))
-                    {
-                        using (var db = DbConnectionFactory.OpenDbConnection())
-                        {
-                            i = db.Update<Csbk1>(
-                                            new
-                                            {
-                                                AttachmentFlag = "Y"
-                                            },
-                                            p => p.BookingNo == request.BookingNo
-                            );
-                        }
-                    }
+                    //if (i.Equals(0))
+                    //{
+                    //    using (var db = DbConnectionFactory.OpenDbConnection())
+                    //    {
+                    //        i = db.Update<Csbk1>(
+                    //                        new
+                    //                        {
+                    //                            AttachmentFlag = "Y"
+                    //                        },
+                    //                        p => p.BookingNo == request.BookingNo
+                    //        );
+                    //    }
+                    //}
                 }
                 catch { throw; }
             }
