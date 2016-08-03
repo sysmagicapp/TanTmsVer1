@@ -52,7 +52,6 @@ $cordovaGeolocation.getCurrentPosition(mapOptions).then(function(position){
       animation: google.maps.Animation.DROP,
       position: latLng
   });
-
 });
 
 
