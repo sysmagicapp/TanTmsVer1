@@ -61,14 +61,80 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         };
 
         $scope.funcLogin = function (blnDemo) {
-            if (blnDemo) {
-                ENV.mock = true;
-            } else {
-                ENV.mock = false;
+            if (window.cordova && window.cordova.plugins.Keyboard) {
+                cordova.plugins.Keyboard.close();
             }
-            $state.go('index.main', {}, {
-                reload: true
-            });
+            if (is.equal($scope.logininfo.CurRole, '1')) {
+                if (is.empty($scope.logininfo.strdriverID)) {
+                    PopupService.Alert(null, 'Please Enter Driver ID.');
+                } else {
+                    var objUri = ApiService.Uri(true, '/api/tms/login/check').addSearch('DriverCode', $scope.logininfo.strdriverID);
+                    ApiService.Get(objUri, true).then(function success(result) {
+                        var results = result.data.results;
+                        if (is.not.empty(results)) {
+                            sessionStorage.clear();
+                            sessionStorage.setItem('sessionDriverCode', $scope.logininfo.strdriverID);
+                            var objTodr1_Rcbp1 = {
+                                DriverCode: $scope.logininfo.strdriverID,
+                            };
+                            SqlService.Insert('Todr1_Rcbp1', objTodr1_Rcbp1).then(function (res) {});
+                            $state.go('index.main', {}, {
+                                reload: true
+                            });
+                            $rootScope.$broadcast('login');
+                        } else {
+                            PopupService.Alert(null, 'Invalid Driver ID.', '');
+                        }
+                    });
+                }
+            } else {
+                if (is.empty($scope.logininfo.strAgentID)) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Please Enter Agent ID.',
+                        okType: 'button-assertive'
+                    });
+                    $timeout(function () {
+                        alertPopup.close();
+                    }, 2500);
+                    return;
+                }
+
+                if (is.empty($scope.logininfo.strPassWord)) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Please Enter PassWord.',
+                        okType: 'button-assertive'
+                    });
+                    $timeout(function () {
+                        alertPopup.close();
+                    }, 2500);
+                    return;
+
+                }
+                if (is.equal($scope.logininfo.CurRole, '2')) {
+                    var objUri = ApiService.Uri(true, '/api/tms/login/check');
+                    objUri.addSearch('BusinessPartyCode', $scope.logininfo.strAgentID);
+                    objUri.addSearch('PassWord', $scope.logininfo.strPassWord);
+                    ApiService.Get(objUri, true).then(function success(result) {
+                        var results = result.data.results;
+                        if (is.not.empty(results)) {
+                            sessionStorage.clear();
+                            sessionStorage.setItem('sessionAgentID', $scope.logininfo.strAgentID);
+                            sessionStorage.setItem('sessionPassWord', $scope.logininfo.strPassWord);
+                            var objTodr1_Rcbp1 = {
+                                BusinessPartyCode: $scope.logininfo.strAgentID,
+                                PassWord: $scope.logininfo.strPassWord
+                            };
+                            SqlService.Insert('Todr1_Rcbp1', objTodr1_Rcbp1).then(function (res) {});
+                            $state.go('index.main', {}, {
+                                reload: true
+                            });
+                            $rootScope.$broadcast('login');
+                        } else {
+                            PopupService.Alert(null, 'Invalid Agent.');
+                        }
+                    });
+                }
+            }
         };
 
         if (window.cordova) {} else {
@@ -80,5 +146,33 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                 $scope.funcLogin();
             }
         });
+
+        $ionicPlatform.ready(function () {
+      SqlService.Select('Todr1_Rcbp1', '*').then(function (res) {
+              if (res.rows.length > 0 ) {
+                  var objTodr1_Rcbp1 = res.rows.item(0);
+                  if(objTodr1_Rcbp1.DriverCode.length>0){
+                    $rootScope.$broadcast('login');
+                    sessionStorage.clear();
+                    sessionStorage.setItem('sessionDriverCode', objTodr1_Rcbp1.DriverCode);
+                    $state.go('index.main', {}, {
+                        reload: true
+                    });
+                  }else{
+                    $rootScope.$broadcast('login');
+                    $scope.logininfo.strRole = 'Agent';
+                    sessionStorage.clear();
+                    sessionStorage.setItem('sessionAgentID', objTodr1_Rcbp1.strAgentID);
+                    sessionStorage.setItem('sessionPassWord', objTodr1_Rcbp1.strPassWord);
+                    $state.go('index.main', {}, {
+                        reload: true
+                    });
+                  }
+
+              }
+          },
+          function (error) {}
+      );
+  });
     }
 ]);

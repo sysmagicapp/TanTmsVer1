@@ -34,12 +34,12 @@ app.run(['ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeout
             }
             SqlService.Init().then(function (res) {
                 if (ENV.fromWeb) {
-                    SqlService.Drop('Csbk1').then(function (res) {
-                        SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function (res) {});
+                    SqlService.Drop('Todr1_Rcbp1').then(function (res) {
+                        SqlService.Create('Todr1_Rcbp1', TABLE_DB.Todr1_Rcbp1).then(function (res) {});
                     });
 
                 } else {
-                    SqlService.Create('Csbk1', TABLE_DB.Csbk1).then(function (res) {});
+                    SqlService.Create('Todr1_Rcbp1', TABLE_DB.Todr1_Rcbp1).then(function (res) {});
                 }
             });
         });

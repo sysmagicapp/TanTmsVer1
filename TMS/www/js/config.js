@@ -2,8 +2,8 @@
 var appConfig = angular.module( 'TMS.config', [] );
 appConfig.constant( 'ENV', {
     website: 'www.sysfreight.net/app/tms/jollyb',
-      api: 'http://localhost:62787/',
-    //  api:  'localhost:9679',
+      // api: 'http://localhost:62787/',
+     api:  'localhost:9679',
     reset: {
         'website': 'www.sysfreight.net/app/tms/jollyb',
         'api': 'www.sysfreight.net/apis/tms/jollyb',
@@ -20,7 +20,7 @@ appConfig.constant( 'ENV', {
           name: 'AppTanTms.db',
           location: 'default'
         },
-    port: '8081', // http port no
+    // port: '8081', // http port no
     ssl: false,
     debug: true,
     mock: false,

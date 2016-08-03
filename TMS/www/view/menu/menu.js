@@ -18,7 +18,7 @@ app.controller( 'IndexCtrl', [ 'ENV', '$ionicPlatform', '$scope', '$state', '$ro
         });
     };
         var deleteLogin = function () {
-          SqlService.Del('Users','','')
+          SqlService.Del('Todr1_Rcbp1','','')
           .then(function (res)
            {
              $rootScope.$broadcast( 'logout' );
