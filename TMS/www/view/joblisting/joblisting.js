@@ -140,6 +140,9 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             context.clearRect(0, 0, 320, 480);
             $scope.capture = null;
         };
+        $scope.showGoogleMaps = function () {
+            $state.go('googleMaps', {}, {});
+        }
         $scope.uploadPhoto = function () {
             var jsonData = {
                 'Base64': $scope.capture,
@@ -201,11 +204,10 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             });
         };
         $scope.gotoConfirm = function () {
-              $state.go('jobListingConfirm', {}, {
-                  reload: true
-              });
-          };
-
+            $state.go('jobListingConfirm', {}, {
+                reload: true
+            });
+        };
 
     }
 ]);

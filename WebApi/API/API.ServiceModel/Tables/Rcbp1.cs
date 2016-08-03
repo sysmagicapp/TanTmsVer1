@@ -9,6 +9,8 @@ namespace WebApi.ServiceModel.Tables
     {
         public string Handphone1 { get; set; }
         public string Telephone { get; set; }
-
+        public string BusinessPartyCode { get; set; }
+        public string BusinessPartyName { get; set; }
+        public string Password { get; set; }
     }
 }

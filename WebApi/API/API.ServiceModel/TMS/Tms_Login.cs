@@ -17,7 +17,9 @@ namespace WebApi.ServiceModel.TMS
         public string ContactNo { get; set; }
         public string DriverCode { get; set; }
         public string DriverName { get; set; }
-     
+        public string CustomerCode { get; set; }　
+        public string Password { get; set; }
+       
     }
     public class Tms_Login_Logic
     {
@@ -32,9 +34,17 @@ namespace WebApi.ServiceModel.TMS
                 using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
                 {
                     if (request.DriverCode != null && request.DriverCode.Length > 0)
-                    { 
-                        string strSql = "Select isnull(DriverName,'') as  DriverName ,isnull(VehicleNo,'') as  VehicleNo From Todr1 Where DriverCode='" + request.DriverCode + "' ";
+                    {
+                        string strSql = "Select isnull(DriverName,'') as  DriverName ,isnull(VehicleNo,'') as VehicleNo,'' AS CustomerCode,'' AS Password From Todr1 Where DriverCode='" + Modfunction.SQLSafe(request.DriverCode) + "' ";
                         Result = db.Select<Todr1>(strSql);
+                    }
+                    if (request.CustomerCode != null && request.CustomerCode.Length > 0)
+                    {
+                        if (request.Password != null && request.Password.Length > 0)
+                        {
+                            string strSql = "Select '' as  DriverCode ,'' as  DriverName ,'' as  VehicleNo,Password From rcbp1 Where BusinessPartyCode ='" + Modfunction.SQLSafe(request.DriverCode) + "' AND Password = '" + Modfunction.SQLSafe(request.DriverCode) + "'";
+                            Result = db.Select<Todr1>(strSql);
+                        }                       
                     }
        
                 }
@@ -63,7 +73,6 @@ namespace WebApi.ServiceModel.TMS
                         strSQL = "select isnull(DriverCode,'') as  DriverCode,isnull(DriverName,'') as  DriverName from todr1 where ContactNo1=" + Modfunction.SQLSafeValue(request.ContactNo);
                         Result = db.Select<Todr1>(strSQL);
                     }
-
                 }
             }
             catch { throw; }

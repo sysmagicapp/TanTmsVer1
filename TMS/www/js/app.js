@@ -14,7 +14,7 @@ var app = angular.module('TMS', [
     'TMS.services',
     'TMS.factories',
     'ui.select',
-
+    'ngCordova'
 ]);
 app.run(['ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeout', '$ionicHistory', '$ionicLoading', '$cordovaToast', '$cordovaKeyboard', '$cordovaFile', '$cordovaSQLite', 'SqlService', 'TABLE_DB',
     function (ENV, $ionicPlatform, $rootScope, $state, $location, $timeout, $ionicHistory, $ionicLoading, $cordovaToast, $cordovaKeyboard, $cordovaFile, $cordovaSQLite, SqlService, TABLE_DB) {
@@ -169,6 +169,12 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                         controller: 'MainCtrl'
                     }
                 }
+            })
+            .state('googleMaps', {
+                url: '/googleMaps/googleMaps',
+                cache: 'false',
+                templateUrl: 'view/googleMaps/googleMaps.html',
+                controller: 'GoogleMapCtrl'
             })
             .state('index.setting', {
                 url: '/setting/setting',
