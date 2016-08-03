@@ -11,30 +11,33 @@ namespace WebApi.ServiceModel.TMS
     [Route("/tms/login/check", "Get")]
     public class Tms_Login : IReturn<CommonResponse>
     {
-        //public string UserId { get; set; }　　　//20160511 注释
-        //public string Password { get; set; }
-        //public string Md5Stamp { get; set; }
-        public string ContactNo { get; set; }
+      
         public string DriverCode { get; set; }
-        public string DriverName { get; set; }
-     
+        public string BusinessPartyCode { get; set; }
+        public string PassWord { get; set; }
+   
     }
     public class Tms_Login_Logic
-    {
-        public Boolean BlnContactNo = true;
+    {    
         public IDbConnectionFactory DbConnectionFactory { get; set; }
-        public List<Todr1> LoginCheck(Tms_Login request)
+        public List<Todr1_Rcbp1> LoginCheck(Tms_Login request)
         {
             
-            List<Todr1> Result = null; ;    //20160511 
+            List<Todr1_Rcbp1> Result = null; 
             try
             {
                 using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
                 {
+                    string strSql = "";
                     if (request.DriverCode != null && request.DriverCode.Length > 0)
-                    { 
-                        string strSql = "Select isnull(DriverName,'') as  DriverName ,isnull(VehicleNo,'') as  VehicleNo From Todr1 Where DriverCode='" + request.DriverCode + "' ";
-                        Result = db.Select<Todr1>(strSql);
+                    {
+                        strSql = "Select isnull(DriverCode,'') as  DriverCode   From Todr1 Where DriverCode='" + request.DriverCode + "' ";
+                        Result = db.Select<Todr1_Rcbp1>(strSql);
+                    }
+                    else if (request.BusinessPartyCode != null && request.BusinessPartyCode.Length > 0 &&  request.BusinessPartyCode != null && request.BusinessPartyCode.Length > 0)
+                    {
+                        strSql = "Select isnull(BusinessPartyCode,'') as  BusinessPartyCode ,isnull(PassWord,'') as  PassWord From Rcbp1 Where BusinessPartyCode='" + request.BusinessPartyCode + "' And PassWord ='"+request.PassWord+"' ";
+                        Result = db.Select<Todr1_Rcbp1>(strSql);
                     }
        
                 }
@@ -44,32 +47,7 @@ namespace WebApi.ServiceModel.TMS
 
         }
 
-        public List<Todr1> GetTodr1(Tms_Login request)    //20160511 
-        {
-            List<Todr1> Result = null;
-            try
-            {
-                using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
-                {
-
-                    var strSQL = "";
-                    if (BlnContactNo == false)
-                    {
-                        strSQL = "select isnull(DriverCode,'') as  DriverCode,isnull(DriverName,'') as  DriverName from todr1 where ContactNo2=" + Modfunction.SQLSafeValue(request.ContactNo);
-                        Result = db.Select<Todr1>(strSQL);
-                    }
-                    else
-                    {
-                        strSQL = "select isnull(DriverCode,'') as  DriverCode,isnull(DriverName,'') as  DriverName from todr1 where ContactNo1=" + Modfunction.SQLSafeValue(request.ContactNo);
-                        Result = db.Select<Todr1>(strSQL);
-                    }
-
-                }
-            }
-            catch { throw; }
-            return Result;
-
-        }
+  
 
 
 
