@@ -87,7 +87,7 @@
   <ItemGroup>
     <ProjectReference Include="..\API.ServiceModel\API.ServiceModel.csproj">
       <Project>{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}</Project>
-      <Name>WebApi.ServiceModel</Name>
+      <Name>API.ServiceModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
