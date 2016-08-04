@@ -2,15 +2,35 @@
 app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading', '$ionicPopup', '$ionicFilterBar', '$ionicActionSheet', 'ApiService', '$ionicPlatform', '$cordovaSQLite', 'SqlService',
     function (ENV, $scope, $state, $ionicLoading, $ionicPopup, $ionicFilterBar, $ionicActionSheet, ApiService, $ionicPlatform, $cordovaSQLite, SqlService) {
         var filterBarInstance = null;
-
         var dataResults = new Array();
-        var jobs = [{
-            TrxNo: 1,
-            bookingno: 2,
+        var showAemp1WithAido1 = function () {
+            var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
+            ApiService.Get(objUri, true).then(function success(result) {
+                var results = result.data.results;
+                if (is.not.empty(results)) {
+                    for (var i = 0; i < results.length; i++) {
+                        var objAemp1WithAido1 = results[i];
+                        var jobs = [{
+                            DCFlagWithPcsUom: objAemp1WithAido1.DCFlag +' '+ objAemp1WithAido1.PcsUom,
+                            Time: objAemp1WithAido1.DeliveryDate,
+                            customer: {
+                                name: objAemp1WithAido1.DeliveryToName,
+                                address: objAemp1WithAido1.DeliveryToAddress1 + objAemp1WithAido1.DeliveryToAddress2 + objAemp1WithAido1.DeliveryToAddress3 + objAemp1WithAido1.DeliveryToAddress4
+                            },
+                            status: {
+                                inprocess: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? false : true,
+                                success: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? true : false,
+                                failed: false
+                            }
+                        }];
+                        dataResults = dataResults.concat(jobs);
+                        $scope.jobs = dataResults;
+                    }
+                }
+            });
+        };
 
-        }];
-        dataResults = dataResults.concat(jobs);
-        $scope.jobs = dataResults;
+showAemp1WithAido1();
 
         $scope.returnMain = function () {
             $state.go('index.login', {}, {

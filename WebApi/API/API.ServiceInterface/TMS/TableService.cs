@@ -9,7 +9,23 @@ namespace WebApi.ServiceInterface.TMS
 {
     public class TableService
     {
-       
+        public void TS_AempWithAido1(Auth auth, Aemp_Aido request, Aemp_Aido_Logic aemp_aido_logic, CommonResponse ecr, string[] token, string uri)
+        {
+            if (auth.AuthResult(token, uri))
+            {
+                if (uri.IndexOf("/tms/aemp1withaido1") > 0)
+                {
+                    ecr.data.results = aemp_aido_logic.Get_Aemp1WithAido1_List(request);
+                }
+                ecr.meta.code = 200;
+                ecr.meta.message = "OK";
+            }
+            else
+            {
+                ecr.meta.code = 401;
+                ecr.meta.message = "Unauthorized";
+            }
+        }
 
         public void TS_Rcbp(Auth auth, Rcbp request, Rcbp_Logic rcbp_logic, CommonResponse ecr, string[] token, string uri)
         {
