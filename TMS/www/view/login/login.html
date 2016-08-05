@@ -17,15 +17,15 @@
             </div>
             <label class="item item-input" ng-show="funcRoleJuage(1)">
                 <i class="icon ion-android-person placeholder-icon"></i>&nbsp;&nbsp;
-                <input type="tel" id="iPhoneNumber" placeholder="Driver ID" required ng-model="logininfo.strdriverID">
+                <input type="text" id="iDriverID" placeholder="Driver ID" required ng-model="logininfo.strdriverID">
             </label>
             <label class="item item-input" ng-show="funcRoleJuage(2)">
                 <i class="icon ion-android-person placeholder-icon"></i>&nbsp;&nbsp;
-                <input type="tel" id="iCustomerCode" placeholder="Agent ID" required ng-model="logininfo.strAgentID">
+                <input type="text" id="iCustomerCode" placeholder="Agent ID" required ng-model="logininfo.strAgentID">
             </label>
             <label class="item item-input" ng-show="funcRoleJuage(2)">
                 <i class="icon ion-android-lock placeholder-icon"></i>&nbsp;&nbsp;
-                <input type="tel" id="iJobNo" placeholder="Password" required ng-model="logininfo.strPassWord">
+                <input type="text" id="iJobNo" placeholder="Password" required ng-model="logininfo.strPassWord">
             </label>
             <button class="button button-block button-positive" ng-click="funcLogin(false)">SIGN IN</button>
         </div>

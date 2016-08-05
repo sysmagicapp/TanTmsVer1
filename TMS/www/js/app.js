@@ -13,8 +13,8 @@ var app = angular.module('TMS', [
     'TMS.directives',
     'TMS.services',
     'TMS.factories',
-    'ui.select',
-    'ngCordova'
+    'ui.select'
+
 ]);
 app.run(['ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeout', '$ionicHistory', '$ionicLoading', '$cordovaToast', '$cordovaKeyboard', '$cordovaFile', '$cordovaSQLite', 'SqlService', 'TABLE_DB',
     function (ENV, $ionicPlatform, $rootScope, $state, $location, $timeout, $ionicHistory, $ionicLoading, $cordovaToast, $cordovaKeyboard, $cordovaFile, $cordovaSQLite, SqlService, TABLE_DB) {

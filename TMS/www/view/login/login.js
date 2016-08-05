@@ -121,6 +121,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             sessionStorage.setItem('sessionAgentID', $scope.logininfo.strAgentID);
                             sessionStorage.setItem('sessionPassWord', $scope.logininfo.strPassWord);
                             var objTodr1_Rcbp1 = {
+                                DriverCode: '',
                                 BusinessPartyCode: $scope.logininfo.strAgentID,
                                 PassWord: $scope.logininfo.strPassWord
                             };
@@ -137,42 +138,44 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
             }
         };
 
-        if (window.cordova) {} else {
+        if (window.cordova) {
+            $scope.logininfo.strRole = 'Driver';
+        } else {
             $scope.logininfo.strRole = 'Driver';
         }
 
-        $('#iPhoneNumber').on('keydown', function (e) {
+        $('#iDriverID').on('keydown', function (e) {
             if (e.which === 9 || e.which === 13) {
                 $scope.funcLogin();
             }
         });
 
         $ionicPlatform.ready(function () {
-      SqlService.Select('Todr1_Rcbp1', '*').then(function (res) {
-              if (res.rows.length > 0 ) {
-                  var objTodr1_Rcbp1 = res.rows.item(0);
-                  if(objTodr1_Rcbp1.DriverCode.length>0){
-                    $rootScope.$broadcast('login');
-                    sessionStorage.clear();
-                    sessionStorage.setItem('sessionDriverCode', objTodr1_Rcbp1.DriverCode);
-                    $state.go('index.main', {}, {
-                        reload: true
-                    });
-                  }else{
-                    $rootScope.$broadcast('login');
-                    $scope.logininfo.strRole = 'Agent';
-                    sessionStorage.clear();
-                    sessionStorage.setItem('sessionAgentID', objTodr1_Rcbp1.strAgentID);
-                    sessionStorage.setItem('sessionPassWord', objTodr1_Rcbp1.strPassWord);
-                    $state.go('index.main', {}, {
-                        reload: true
-                    });
-                  }
+            SqlService.Select('Todr1_Rcbp1', '*').then(function (res) {
+                    if (res.rows.length > 0) {
+                        var objTodr1_Rcbp1 = res.rows.item(0);
+                        if (is.not.empty(objTodr1_Rcbp1.DriverCode)) {
+                            $rootScope.$broadcast('login');
+                            sessionStorage.clear();
+                            sessionStorage.setItem('sessionDriverCode', objTodr1_Rcbp1.DriverCode);
+                            $state.go('index.main', {}, {
+                                reload: true
+                            });
+                        } else {
+                            $rootScope.$broadcast('login');
+                            $scope.logininfo.strRole = 'Agent';
+                            sessionStorage.clear();
+                            sessionStorage.setItem('sessionAgentID', objTodr1_Rcbp1.BusinessPartyCode);
+                            sessionStorage.setItem('sessionPassWord', objTodr1_Rcbp1.PassWord);
+                            $state.go('index.main', {}, {
+                                reload: true
+                            });
+                        }
 
-              }
-          },
-          function (error) {}
-      );
-  });
+                    }
+                },
+                function (error) {}
+            );
+        });
     }
 ]);
