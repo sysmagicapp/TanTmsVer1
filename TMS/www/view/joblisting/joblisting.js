@@ -12,7 +12,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                         var objAemp1WithAido1 = results[i];
                         var jobs = [{
                             DCFlagWithPcsUom: objAemp1WithAido1.DCFlag +' '+ objAemp1WithAido1.PcsUom,
-                            Time: objAemp1WithAido1.DeliveryDate,
+                            time: checkDatetime(objAemp1WithAido1.TimeFrom),
                             customer: {
                                 name: objAemp1WithAido1.DeliveryToName,
                                 address: objAemp1WithAido1.DeliveryToAddress1 + objAemp1WithAido1.DeliveryToAddress2 + objAemp1WithAido1.DeliveryToAddress3 + objAemp1WithAido1.DeliveryToAddress4

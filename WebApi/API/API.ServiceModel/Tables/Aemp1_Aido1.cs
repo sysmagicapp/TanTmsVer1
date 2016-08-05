@@ -20,7 +20,7 @@ namespace WebApi.ServiceModel.Tables
         public string TableName { get; set; }
         public string DCFlag { get; set; }
         public string PcsUom { get; set; }
-        public Nullable<System.DateTime> TimeFrom { get; set; }
+        public DateTime TimeFrom { get; set; }
         public string DeliveryToName { get; set; }
         public string DeliveryToAddress1 { get; set; }
         public string DeliveryToAddress2 { get; set; }
