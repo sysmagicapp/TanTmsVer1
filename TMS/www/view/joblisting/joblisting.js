@@ -1,9 +1,6 @@
 'use strict';
 app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading', '$ionicPopup', '$ionicFilterBar', '$ionicActionSheet', 'ApiService', '$ionicPlatform', '$cordovaSQLite', 'SqlService',
     function (ENV, $scope, $state, $ionicLoading, $ionicPopup, $ionicFilterBar, $ionicActionSheet, ApiService, $ionicPlatform, $cordovaSQLite, SqlService) {
-      console.log(sessionStorage.getItem("sessionAgentID"));
-      console.log(sessionStorage.getItem("sessionPassWord"));
-      console.log(sessionStorage.getItem("sessionDriverCode"));
         var filterBarInstance = null;
         var dataResults = new Array();
         var showAemp1WithAido1 = function () {
@@ -14,7 +11,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                     for (var i = 0; i < results.length; i++) {
                         var objAemp1WithAido1 = results[i];
                         var jobs = [{
-                            DCFlagWithPcsUom: objAemp1WithAido1.DCFlag +' '+ objAemp1WithAido1.PcsUom,
+                            DCFlagWithPcsUom: objAemp1WithAido1.DCFlag + ' ' + objAemp1WithAido1.PcsUom,
                             time: checkDatetime(objAemp1WithAido1.TimeFrom),
                             customer: {
                                 name: objAemp1WithAido1.DeliveryToName,
@@ -33,7 +30,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             });
         };
 
-showAemp1WithAido1();
+        showAemp1WithAido1();
 
         $scope.returnMain = function () {
             $state.go('index.login', {}, {
