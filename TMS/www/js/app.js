@@ -37,9 +37,12 @@ app.run(['ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeout
                     SqlService.Drop('Todr1_Rcbp1').then(function (res) {
                         SqlService.Create('Todr1_Rcbp1', TABLE_DB.Todr1_Rcbp1).then(function (res) {});
                     });
-
+                    SqlService.Drop('Aemp1_Aido1').then(function (res) {
+                        SqlService.Create('Aemp1_Aido1', TABLE_DB.Aemp1_Aido1).then(function (res) {});
+                    });
                 } else {
                     SqlService.Create('Todr1_Rcbp1', TABLE_DB.Todr1_Rcbp1).then(function (res) {});
+                    SqlService.Create('Aemp1_Aido1', TABLE_DB.Aemp1_Aido1).then(function (res) {});
                 }
             });
         });
@@ -213,7 +216,7 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                 controller: 'JoblistingListCtrl'
             })
             .state('jobListingDetail', {
-                url: '/joblisting/detail',
+                url: '/joblisting/detail/:key',
                 cache: 'false',
                 templateUrl: 'view/joblisting/detail.html',
                 controller: 'JoblistingDetailCtrl'
@@ -234,7 +237,7 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
             })
 
         .state('jobListingConfirm', {
-                url: '/joblisting/confirm',
+                url: '/joblisting/confirm/:key',
                 cache: 'false',
                 templateUrl: 'view/joblisting/confirm.html',
                 controller: 'JoblistingConfirmCtrl'

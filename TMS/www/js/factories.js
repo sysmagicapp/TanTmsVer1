@@ -24,6 +24,30 @@ appFactory.factory('TABLE_DB', function () {
             BusinessPartyCode: 'TEXT',
             PassWord: 'TEXT',
         },
+        Aemp1_Aido1: {
+            Volume: 'INT',
+            Weight :'INT',
+            DeliveryInstruction1: 'TEXT',
+            DeliveryInstruction2: 'TEXT',
+            DeliveryInstruction3 :'TEXT',
+            Remark :'TEXT',
+            AttachmentFlag :'TEXT',
+            UpdatedFlag :'TEXT',
+            Key :'TEXT',
+            JobNo :'TEXT',
+            TableName :'TEXT',
+            DCFlag :'TEXT',
+            PcsUom :'TEXT',
+            TimeFrom :'TEXT',
+            DeliveryToName :'TEXT',
+            DeliveryToAddress1: 'TEXT',
+            DeliveryToAddress2: 'TEXT',
+            DeliveryToAddress3 :'TEXT',
+            DeliveryToAddress4 :'TEXT',
+            StatusCode:'TEXT',
+            TempBase64:'TEXT',
+        }
+
     };
     return TABLE_DB;
 });

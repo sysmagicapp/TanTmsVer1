@@ -13,7 +13,12 @@ namespace WebApi.ServiceInterface.TMS
         {
             if (auth.AuthResult(token, uri))
             {
-                if (uri.IndexOf("/tms/aemp1withaido1") > 0)
+             
+            if (uri.IndexOf("/tms/aemp1withaido1/confirm") > 0)
+                {
+                    ecr.data.results = aemp_aido_logic.confirm_Aemp1WithAido1(request);
+                }
+               else if (uri.IndexOf("/tms/aemp1withaido1") > 0)
                 {
                     ecr.data.results = aemp_aido_logic.Get_Aemp1WithAido1_List(request);
                 }

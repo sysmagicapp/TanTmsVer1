@@ -3,6 +3,38 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
     function (ENV, $scope, $state, $ionicLoading, $ionicPopup, $ionicFilterBar, $ionicActionSheet, ApiService, $ionicPlatform, $cordovaSQLite, SqlService) {
         var filterBarInstance = null;
         var dataResults = new Array();
+        var hmAemp1WithAido1 = new HashMap();
+
+        var getObjAemp1WithAido1 = function (objAemp1WithAido1) {
+            var jobs = {
+                key: objAemp1WithAido1.Key,
+                DCFlagWithPcsUom: objAemp1WithAido1.DCFlag + ' ' + objAemp1WithAido1.PcsUom,
+                time: checkDatetime(objAemp1WithAido1.TimeFrom),
+                customer: {
+                    name: objAemp1WithAido1.DeliveryToName,
+                    address: objAemp1WithAido1.DeliveryToAddress1 + objAemp1WithAido1.DeliveryToAddress2 + objAemp1WithAido1.DeliveryToAddress3 + objAemp1WithAido1.DeliveryToAddress4
+                },
+                status: {
+                    inprocess: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? false : true,
+                    success: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? true : false,
+                    failed: false
+                }
+            };
+            return jobs;
+        };
+
+        var showHmAemp1WithAido1 = function () {
+            // var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "'";  // not record
+            SqlService.Select('Aemp1_Aido1', '*').then(function (results) {
+                if (results.rows.length > 0) {
+                    for (var i = 0; i < results.rows.length; i++) {
+                        var Aemp1WithAido1 = results.rows.item(i);
+                        hmAemp1WithAido1.set(Aemp1WithAido1.Key, Aemp1WithAido1.Key);
+                    }
+                }
+            });
+        };
+
         var showAemp1WithAido1 = function () {
             var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
             ApiService.Get(objUri, true).then(function success(result) {
@@ -10,27 +42,29 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                 if (is.not.empty(results)) {
                     for (var i = 0; i < results.length; i++) {
                         var objAemp1WithAido1 = results[i];
-                        var jobs = [{
-                            DCFlagWithPcsUom: objAemp1WithAido1.DCFlag + ' ' + objAemp1WithAido1.PcsUom,
-                            time: checkDatetime(objAemp1WithAido1.TimeFrom),
-                            customer: {
-                                name: objAemp1WithAido1.DeliveryToName,
-                                address: objAemp1WithAido1.DeliveryToAddress1 + objAemp1WithAido1.DeliveryToAddress2 + objAemp1WithAido1.DeliveryToAddress3 + objAemp1WithAido1.DeliveryToAddress4
-                            },
-                            status: {
-                                inprocess: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? false : true,
-                                success: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? true : false,
-                                failed: false
-                            }
-                        }];
+                        var jobs = getObjAemp1WithAido1(results[i]);
                         dataResults = dataResults.concat(jobs);
                         $scope.jobs = dataResults;
+                        if (!hmAemp1WithAido1.has(objAemp1WithAido1.Key)) {
+                            SqlService.Insert('Aemp1_Aido1', objAemp1WithAido1).then(function (res) {});
+                        }
                     }
+                } else {
+                    var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "'";
+                    SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                        if (results.rows.length > 0) {
+                            for (var i = 0; i < results.rows.length; i++) {
+                                var objAemp1WithAido1 = getObjAemp1WithAido1(results.rows.item(i));
+                                dataResults = dataResults.concat(objAemp1WithAido1);
+                            }
+                            $scope.jobs = dataResults;
+                        }
+                    });
                 }
             });
         };
-
         showAemp1WithAido1();
+        showHmAemp1WithAido1();
 
         $scope.returnMain = function () {
             $state.go('index.login', {}, {
@@ -71,7 +105,9 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
         };
 
         $scope.gotoDetail = function (job) {
-            $state.go('jobListingDetail', {}, {
+            $state.go('jobListingDetail', {
+                'key': job.key
+            }, {
                 reload: true
             });
         };
@@ -84,6 +120,21 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             context = null;
         $scope.capture = null;
         $scope.modal_camera = null;
+        $scope.Detail = {
+            aemp1WithAido1: {
+                Key: $stateParams.key
+            },
+        };
+
+        $ionicPlatform.ready(function () {
+            //  var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "' and  key='" + $scope.Detail.aemp1WithAido1.Key+ "' ";  // not record
+            var strSqlFilter = "key='" + $scope.Detail.aemp1WithAido1.Key + "' ";
+            SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                if (results.rows.length > 0) {
+                    $scope.Detail.aemp1WithAido1 = results.rows.item(0);
+                }
+            });
+        });
 
         var showCamera = function (type) {
             $ionicLoading.show();
@@ -133,7 +184,6 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                 console.error(e);
             }
         };
-
         $scope.myChannel = {
             // the fields below are all optional
             videoHeight: 480,
@@ -171,10 +221,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             var objUri = '';
             PopupService.Info(null, 'Upload Successfully', '').then(function () {
                 $scope.closeModal();
-
             });
         };
-
         $scope.showActionSheet = function () {
             var actionSheet = $ionicActionSheet.show({
                 buttons: [{
@@ -213,18 +261,24 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                 }
             });
         };
-
         $scope.closeModal = function () {
             $scope.modal_camera.hide();
         };
-
         $scope.returnList = function () {
             $state.go('jobListingList', {}, {
                 reload: true
             });
         };
+
         $scope.gotoConfirm = function () {
-            $state.go('jobListingConfirm', {}, {
+            var Aemp1WithAido1Filter = "Key='" + $scope.Detail.aemp1WithAido1.Key + "' and  TableName='" + $scope.Detail.aemp1WithAido1.TableName + "' "; // not record
+            var objAemp1WithAido1 = {
+                Remark: $scope.Detail.aemp1WithAido1.Remark
+            };
+            SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
+            $state.go('jobListingConfirm', {
+                'key': $scope.Detail.aemp1WithAido1.Key
+            }, {
                 reload: true
             });
         };
@@ -238,18 +292,42 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             signaturePad = new SignaturePad(canvas),
             strEemptyBase64 = '';
         $scope.signature = null;
+        $scope.Confirm = {
+            aemp1WithAido1: {
+                Key: $stateParams.key
+            }
+        };
+
+        $ionicPlatform.ready(function () {
+            //  var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "' and  key='" + $scope.Detail.aemp1WithAido1.Key+ "' ";  // not record
+            var strSqlFilter = "key='" + $scope.Confirm.aemp1WithAido1.Key + "' ";
+            SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                if (results.rows.length > 0) {
+                    $scope.Confirm.aemp1WithAido1 = results.rows.item(0);
+                    if ($scope.Confirm.aemp1WithAido1.TempBase64 !== null && is.not.empty($scope.Confirm.aemp1WithAido1.TempBase64)) {
+                        if (is.not.equal(strEemptyBase64, $scope.Confirm.aemp1WithAido1.TempBase64)) {
+                            $scope.signature = 'data:image/png;base64,' + $scope.Confirm.aemp1WithAido1.TempBase64;
+                        }
+                    }
+                }
+            });
+        });
 
         function resizeCanvas() {
             var ratio = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth - 50;
             canvas.height = screen.height / 3;
         }
-        var getSignature = function () {};
+        var getSignature = function () {
+
+        };
         $scope.returnList = function () {
             $state.go('jobListingList', {}, {});
         };
         $scope.returnDetail = function () {
-            $state.go('jobListingDetail', {}, {
+            $state.go('jobListingDetail', {
+                'key': $scope.Confirm.aemp1WithAido1.Key
+            }, {
                 reload: true
             });
         };
@@ -265,6 +343,31 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
         };
         $scope.confirm = function () {
             $scope.saveCanvas();
+            var signature = '';
+            if (is.not.null($scope.signature)) {
+                signature = $scope.signature.split(',')[1];
+            }
+            var Aemp1WithAido1Filter = "Key='" + $scope.Confirm.aemp1WithAido1.Key + "' and  TableName='" + $scope.Confirm.aemp1WithAido1.TableName + "' "; // not record
+            var objAemp1WithAido1 = {
+                StatusCode:'POD',
+                TempBase64: signature
+            };
+            SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
+            var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1/confirm');
+            objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
+            objUri.addSearch('Remark', $scope.Confirm.aemp1WithAido1.Remark);
+            objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+            ApiService.Get(objUri, true).then(function success(result) { });
+            var jsonData = {
+                'Base64': $scope.signature,
+                'FileName': 'signature.Png'
+            };
+            if ($scope.signature !== null && is.not.equal($scope.signature,'') && is.not.undefined($scope.signature) ) {
+                 objUri = ApiService.Uri(true, '/api/tms/upload/img');
+                 objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+                 objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
+                ApiService.Post(objUri, jsonData, true).then(function success(result) {});
+            }
         };
         getSignature();
         resizeCanvas();

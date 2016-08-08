@@ -3,7 +3,7 @@
         <div class="buttons">
             <button class="button button-icon button-clear ion-android-arrow-back" ng-click="returnList()"></button>
         </div>
-        <h1 class="title" ng-bind="title">Collection <Booking No></h1>
+        <h1 class="title">Job - {{Detail.aemp1WithAido1.TableName}} : {{Detail.aemp1WithAido1.Key}} </h1>
     </ion-header-bar>
     <ion-content>
         <div style="height: 43px;"></div>
@@ -21,11 +21,11 @@
             </div>
             <div class="item" style="padding: 0px">
                 <div class="row">
-                    <div class="col">
+                    <div class="col ">
                         Pcs:
                     </div>
                     <div class="col">
-                        <p><span ng-bind="Detail.tobk1.TotalPcs"></span>&nbsp<span ng-bind="Detail.tobk1.UomCode"></span></p>
+                        <p><span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
                     </div>
                 </div>
                 <div class="row">
@@ -33,29 +33,28 @@
                         Weight:
                     </div>
                     <div class="col">
-                        <p><span ng-bind="Detail.tobk1.TotalGrossWeight"></span></p>
+                        <p><span ng-bind="Detail.aemp1WithAido1.Weight"></span></p>
                     </div>
                     <div class="col">
                         Volume:
                     </div>
                     <div class="col">
-                        <p><span ng-bind="Detail.tobk1.TotalVolume"></span></p>
+                        <p><span ng-bind="Detail.aemp1WithAido1.Volume"></span></p>
                     </div>
                 </div>
             </div>
             <div class="item" style="padding: 0px">
                 <p>Cargo Description:</p>
-                <textarea wrap="hard" cols="48px" ng-model="Detail.tobk1.DescriptionOfGoods1" rows="4" readonly="true">
-                </textarea>
-            </div>
-            <div class="item" style="padding: 0px">
-                <p>Special Instructions:</p>
-                <textarea wrap="hard" cols="48px" ng-model="Detail.tobk1.Description" rows="4" readonly="true">
-                </textarea>
+                <!-- <textarea wrap="hard" cols="48px" ng-model="Detail.aemp1WithAido1.DescriptionOfGoods1" rows="4" readonly="true">
+                </textarea> -->
+                <p><span ng-bind="Detail.aemp1WithAido1.DeliveryInstruction1"></span></p>
+                <p><span ng-bind="Detail.aemp1WithAido1.DeliveryInstruction2"></span></p>
+                <p><span ng-bind="Detail.aemp1WithAido1.DeliveryInstruction3"></span></p>
+
             </div>
             <div class="item" style="padding: 0px">
                 <p> Remark:</p>
-                <textarea wrap="hard" cols="48px" ng-model="Detail.tobk1.Note" rows="4">
+                <textarea wrap="hard" cols="48px" ng-model="Detail.aemp1WithAido1.Remark" rows="4">
                 </textarea>
             </div>
         </div>

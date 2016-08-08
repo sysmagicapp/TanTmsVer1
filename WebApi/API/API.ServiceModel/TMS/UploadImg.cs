@@ -16,14 +16,15 @@ using System.Security.AccessControl;
 
 namespace WebApi.ServiceModel.TMS
 {
-    [Route("/tms/upload/img", "Post")]                      //img?BookingNo= & FileName= & Extension=
+    [Route("/tms/upload/img", "Post")]                      //img?Key= & FileName= & Extension=
     [Route("/tms/upload/img", "Options")]			//img?FileName= & Extension=
     public class UploadImg: IReturn<CommonResponse>
     {
-        public string BookingNo { get; set; }
+        public string Key { get; set; }
         public string FileName { get; set; }
         public string Extension { get; set; }
         public string Base64 { get; set; }
+        public string TableName { get; set; }
         public Stream RequestStream { get; set; }
     }
     public class UploadImg_Logic
@@ -33,7 +34,7 @@ namespace WebApi.ServiceModel.TMS
         {
             int i = -1;
             string folderPath = "";
-            if (!string.IsNullOrEmpty(request.BookingNo))
+            if (!string.IsNullOrEmpty(request.Key))
             {
                 try
                 {
@@ -43,7 +44,7 @@ namespace WebApi.ServiceModel.TMS
                         List<Saco1> saco1 = db.Select<Saco1>(strSQL);
                         if (saco1.Count > 0)
                         {
-                            folderPath = saco1[0].DocumentPath  + "\\csbk1\\" + request.BookingNo;
+                            folderPath = saco1[0].DocumentPath  + "\\"+request.TableName+"\\" + request.Key;
                         }
                     }
                     if (!Directory.Exists(folderPath))
@@ -90,19 +91,27 @@ namespace WebApi.ServiceModel.TMS
                             i = 0;
                         }
                     }
-                    //if (i.Equals(0))
-                    //{
-                    //    using (var db = DbConnectionFactory.OpenDbConnection())
-                    //    {
-                    //        i = db.Update<Csbk1>(
-                    //                        new
-                    //                        {
-                    //                            AttachmentFlag = "Y"
-                    //                        },
-                    //                        p => p.BookingNo == request.BookingNo
-                    //        );
-                    //    }
-                    //}
+                    if (i.Equals(0))
+                    {
+                        using (var db = DbConnectionFactory.OpenDbConnection())
+                        {
+                            if (request.TableName == "Aemp1")
+                            {
+
+                                db.Update(request.TableName,
+                                    "AttachmentFlag = 'Y'",
+                                  " TrxNo='" + request.Key + "'");
+                            }
+                            else
+                            {
+                                db.Update(request.TableName,
+                                  "AttachmentFlag = 'Y'",
+                                  " DeliveryOrderNo='" + request.Key + "'");
+                            }
+
+                           
+                        }
+                    }
                 }
                 catch { throw; }
             }
