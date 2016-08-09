@@ -16,7 +16,7 @@ using System.Security.AccessControl;
 
 namespace WebApi.ServiceModel.TMS
 {
-    [Route("/tms/upload/img", "Post")]                      //img?Key= & FileName= & Extension=
+    [Route("/tms/upload/img", "Post")]                      //img?Key= & TableName= & FileName= & Extension=
     [Route("/tms/upload/img", "Options")]			//img?FileName= & Extension=
     public class UploadImg: IReturn<CommonResponse>
     {
@@ -40,7 +40,7 @@ namespace WebApi.ServiceModel.TMS
                 {
                     using (var db = DbConnectionFactory.OpenDbConnection())
                     {
-                       string strSQL = "Select  DocumentPath From Saco1 where cityCode='SIN' ";
+                       string strSQL = "Select  DocumentPath From Saco1 ";
                         List<Saco1> saco1 = db.Select<Saco1>(strSQL);
                         if (saco1.Count > 0)
                         {
@@ -105,7 +105,7 @@ namespace WebApi.ServiceModel.TMS
                             else
                             {
                                 db.Update(request.TableName,
-                                  "AttachmentFlag = 'Y'",
+                                  " AttachmentFlag = 'Y'",
                                   " DeliveryOrderNo='" + request.Key + "'");
                             }
 

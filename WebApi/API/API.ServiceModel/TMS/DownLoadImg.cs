@@ -14,10 +14,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace WebApi.ServiceModel.TMS
 {
     [Route("/tms/csbk1/doc", "Get")]                // doc?JobNo=
-    [Route("/tms/csbk1/attach", "Get")]	// attach?BookingNo=
+    [Route("/tms/aemp1withaido1/attach", "Get")]	// attach? Key= & TableName=
     public  class DownLoadImg : IReturn<CommonResponse>
     {
-        public string BookingNo { get; set; }
+        public string Key  { get; set; }
+        public string TableName { get; set; }
         public string JobNo { get; set; }
     }
 
@@ -98,7 +99,7 @@ namespace WebApi.ServiceModel.TMS
                 using (var db = DbConnectionFactory.OpenDbConnection())
                 {
                     //string strSQL = "Select Top 1 BackupPath From Saco1";
-                    string strSQL = "Select  DocumentPath From Saco1 where cityCode='SIN' ";
+                    string strSQL = "Select  DocumentPath From Saco1  ";
                     List<Saco1> saco1 = db.Select<Saco1>(strSQL);
                     if (saco1.Count > 0)
                     {
@@ -108,11 +109,18 @@ namespace WebApi.ServiceModel.TMS
                 //strPath = DocumentPath + "\\csbk1\\" + request.BookingNo;
                 //   GetAllDirList(strPath);
 
-                strPath = DocumentPath  + "\\csbk1\\" + request.BookingNo + "\\"+ "signature.png";          /*20160518 download file path for signature.png*/
+                if (request.TableName == "Aemp1")
+                {
+                    strPath = DocumentPath + "\\"+request.TableName  +"\\" + request.Key + "\\" + "signature.png";          /*20160518 download file path for signature.png*/
+                }
+                else {
+                    strPath = DocumentPath + "\\" + request.TableName + "\\" + request.Key + "\\" + "signature.png";          /*20160518 download file path for signature.png*/
+                }
+              
                 if (File.Exists(strPath))
                 {
 
-                    //   strPath = "E:\\" + "\\Sysfreight\\" + "\\csbk1\\" + request.BookingNo + "\\" + "signature.png";
+                
                     using (FileStream fsRead = new FileStream(strPath, FileMode.Open))
                     {
                         int fsLen = (int)fsRead.Length;                      /*20160518 To convert imgage ask Base64 */

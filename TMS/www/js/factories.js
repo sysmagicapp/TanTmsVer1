@@ -45,6 +45,7 @@ appFactory.factory('TABLE_DB', function () {
             DeliveryToAddress3 :'TEXT',
             DeliveryToAddress4 :'TEXT',
             StatusCode:'TEXT',
+            CancelDescription:'TEXT',
             TempBase64:'TEXT',
         }
 

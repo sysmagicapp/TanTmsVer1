@@ -35,6 +35,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ServiceStack.3.9.71\lib\net35\ServiceStack.dll</HintPath>
       <Private>True</Private>
@@ -82,6 +85,7 @@
     <Compile Include="CommonResponse.cs" />
     <Compile Include="ConfigInterface.cs" />
     <Compile Include="Tables\Aemp1_Aido1.cs" />
+    <Compile Include="Tables\Jmjm3.cs" />
     <Compile Include="Tables\Rcbp1.cs" />
     <Compile Include="Tables\Saco1.cs" />
     <Compile Include="Tables\Todr1_Rcbp1.cs" />

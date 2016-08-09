@@ -22,21 +22,22 @@
             <div class="item" style="padding: 0px">
                 <div class="row">
                     <div class="col ">
-                        Pcs:
+
+                          <p>Pcs: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
                     </div>
-                    <div class="col">
+                    <!-- <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col">
-                        Weight:
+                    <p>    Weight:</p>
                     </div>
                     <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.Weight"></span></p>
                     </div>
                     <div class="col">
-                        Volume:
+                      <p>    Volume:</p>
                     </div>
                     <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.Volume"></span></p>
@@ -64,7 +65,7 @@
             <button class="button icon ion-android-done" ng-click="gotoConfirm()">
                 &nbsp;OK
             </button>
-            <button class="button icon ion-arrow-return-right" ng-click="returnList()">
+            <button class="button icon ion-arrow-return-right" ng-click="cancel()">
                 &nbsp;Cancel
             </button>
         </div>
@@ -99,5 +100,15 @@
                 </div>
             </ion-footer-bar>
         </ion-modal-view>
+    </script>
+    <script id="popup-cancel.html" type="text/ng-template">
+      <ion-radio ng-repeat="item in cancelJmjm3s"
+               ng-value="item.value"
+       ng-model="cancelJmjm3sItem.NewItem">
+      {{ item.text }}
+    </ion-radio>
+
+   <input ng-model="cancelJmjm3sItem.Remark" type="text" placeholder="Remark" ng-show="cancelJmjm3sItem.NewItem =='Remark'" >
+
     </script>
 </ion-view>

@@ -27,7 +27,8 @@ namespace WebApi.ServiceModel.Tables
         public string DeliveryToAddress3 { get; set; }
         public string DeliveryToAddress4 { get; set; }
         public string StatusCode { get; set; }
+        public string CancelDescription { get; set; }
 
-        
+
     }
 }

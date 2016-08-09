@@ -22,6 +22,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         $scope.funcChangeRole = function () {
             var myPopup = $ionicPopup.show({
                 template: '<ion-radio ng-repeat="role in roles" ng-value="role.value" ng-model="logininfo.NewRole">{{ role.text }}</ion-radio>',
+
                 title: 'Select Login Role',
                 scope: $scope,
                 buttons: [{

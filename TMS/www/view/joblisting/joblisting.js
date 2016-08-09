@@ -17,13 +17,13 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                 status: {
                     inprocess: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? false : true,
                     success: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? true : false,
-                    failed: false
+                    failed: is.equal(objAemp1WithAido1.StatusCode, 'Cancel') ? true : false,
                 }
             };
             return jobs;
         };
 
-        var showHmAemp1WithAido1 = function () {
+        var getHmAemp1WithAido1 = function () {
             // var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "'";  // not record
             SqlService.Select('Aemp1_Aido1', '*').then(function (results) {
                 if (results.rows.length > 0) {
@@ -35,6 +35,21 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             });
         };
 
+        var getSignature = function (objAemp1Aido1) {
+            var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1/attach');
+            objUri.addSearch('Key', objAemp1Aido1.Key);
+            objUri.addSearch('TableName', objAemp1Aido1.TableName);
+            ApiService.Get(objUri, true).then(function success(result) {
+                if (is.not.undefined(result.data.results)) {
+                    $scope.signature = result.data.results;
+                    var Aemp1WithAido1Filter = "Key='" + objAemp1Aido1.Key + "' and  TableName='" + objAemp1Aido1.TableName + "' "; // not record
+                    var objAemp1WithAido1 = {
+                        TempBase64: $scope.signature
+                    };
+                    SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
+                }
+            });
+        };
         var showAemp1WithAido1 = function () {
             var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
             ApiService.Get(objUri, true).then(function success(result) {
@@ -47,6 +62,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                         $scope.jobs = dataResults;
                         if (!hmAemp1WithAido1.has(objAemp1WithAido1.Key)) {
                             SqlService.Insert('Aemp1_Aido1', objAemp1WithAido1).then(function (res) {});
+                            getSignature(objAemp1WithAido1);
                         }
                     }
                 } else {
@@ -64,7 +80,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             });
         };
         showAemp1WithAido1();
-        showHmAemp1WithAido1();
+        getHmAemp1WithAido1();
 
         $scope.returnMain = function () {
             $state.go('index.login', {}, {
@@ -82,7 +98,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.jobs,
                 expression: function (filterText, value, index, array) {
-                    return value.bookingno.indexOf(filterText) > -1;
+                    return value.key.indexOf(filterText) > -1;
                 },
                 //filterProperties: ['bookingno'],
                 update: function (filteredItems, filterText) {
@@ -124,6 +140,33 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             aemp1WithAido1: {
                 Key: $stateParams.key
             },
+
+        };
+
+        $scope.cancelJmjm3s = [{
+            text: 'Address Not Correct',
+            value: 'Address'
+        }, {
+            text: 'Goods Not Ready ',
+            value: 'Goods'
+        }, {
+            text: 'Vehicle Breakdown',
+            value: 'Vehicle'
+
+        }, {
+            text: ' Bad Weather',
+            value: ' BadWeather'
+        }, {
+            text: 'Reassign Driver',
+            value: 'ReassignDriver'
+        }, {
+            text: 'Remark',
+            value: 'Remark'
+        }];
+        $scope.cancelJmjm3sItem = {
+            NewItem: 'Address',
+            Remark: '',
+            CancelDescription: $scope.Detail.aemp1WithAido1.CancelDescription
         };
 
         $ionicPlatform.ready(function () {
@@ -270,6 +313,39 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             });
         };
 
+        $scope.cancel = function () {
+            var myPopup = $ionicPopup.show({
+                templateUrl: 'popup-cancel.html',
+                title: 'Select  Item',
+                scope: $scope,
+                buttons: [{
+                    text: 'Cancel',
+                    onTap: function (e) {}
+                }, {
+                    text: 'Save',
+                    type: 'button-positive',
+                    onTap: function (e) {
+                        for (var i in $scope.cancelJmjm3s) {
+                            if ($scope.cancelJmjm3sItem.NewItem === $scope.cancelJmjm3s[i].value) {
+                                if ($scope.cancelJmjm3sItem.NewItem === "Remark") {
+                                    $scope.cancelJmjm3sItem.CancelDescription = $scope.cancelJmjm3sItem.Remark;
+                                } else {
+                                    $scope.cancelJmjm3sItem.CancelDescription = $scope.cancelJmjm3s[i].text;
+                                }
+                            }
+                        }
+                        var Aemp1WithAido1Filter = "Key='" + $scope.Detail.aemp1WithAido1.Key + "' and  TableName='" + $scope.Detail.aemp1WithAido1.TableName + "' "; // not record
+                        var objAemp1WithAido1 = {
+                            CancelDescription: $scope.cancelJmjm3sItem.CancelDescription,
+                            StatusCode: 'Cancel'
+                        };
+                        SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
+
+                    }
+                }]
+            });
+        };
+
         $scope.gotoConfirm = function () {
             var Aemp1WithAido1Filter = "Key='" + $scope.Detail.aemp1WithAido1.Key + "' and  TableName='" + $scope.Detail.aemp1WithAido1.TableName + "' "; // not record
             var objAemp1WithAido1 = {
@@ -349,7 +425,7 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             }
             var Aemp1WithAido1Filter = "Key='" + $scope.Confirm.aemp1WithAido1.Key + "' and  TableName='" + $scope.Confirm.aemp1WithAido1.TableName + "' "; // not record
             var objAemp1WithAido1 = {
-                StatusCode:'POD',
+                StatusCode: 'POD',
                 TempBase64: signature
             };
             SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
@@ -357,17 +433,20 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
             objUri.addSearch('Remark', $scope.Confirm.aemp1WithAido1.Remark);
             objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
-            ApiService.Get(objUri, true).then(function success(result) { });
+            ApiService.Get(objUri, true).then(function success(result) {});
             var jsonData = {
                 'Base64': $scope.signature,
                 'FileName': 'signature.Png'
             };
-            if ($scope.signature !== null && is.not.equal($scope.signature,'') && is.not.undefined($scope.signature) ) {
-                 objUri = ApiService.Uri(true, '/api/tms/upload/img');
-                 objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
-                 objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
+            if ($scope.signature !== null && is.not.equal($scope.signature, '') && is.not.undefined($scope.signature)) {
+                objUri = ApiService.Uri(true, '/api/tms/upload/img');
+                objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+                objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
                 ApiService.Post(objUri, jsonData, true).then(function success(result) {});
             }
+            PopupService.Info(null, 'Confirm Success', '').then(function (res) {
+                $scope.returnList();
+            });
         };
         getSignature();
         resizeCanvas();
