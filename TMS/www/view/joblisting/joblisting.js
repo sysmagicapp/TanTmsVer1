@@ -202,8 +202,9 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             try {
                 $cordovaCamera.getPicture(options).then(function (imageUri) {
                     var uri = '';
-                    // var uri = ApiService.Uri(true, '/api/tms/upload/img');
-                    //  uri.addSearch('BookingNo', $scope.Detail.csbk1.BookingNo)
+                    uri = ApiService.Uri(true, '/api/tms/upload/img');
+                    uri.addSearch('Key', $scope.Detail.aemp1WithAido1.Key);
+                    uri.addSearch('TableName', $scope.Detail.aemp1WithAido1.TableName);
                     var url = ApiService.Url(uri);
                     var filePath = imageUri,
                         trustHosts = true,
@@ -262,8 +263,13 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                 'FileName': moment().format('YYYY-MM-DD-HH-mm-ss').toString() + '.jpg'
             };
             var objUri = '';
-            PopupService.Info(null, 'Upload Successfully', '').then(function () {
-                $scope.closeModal();
+            objUri = ApiService.Uri(true, '/api/tms/upload/img');
+            objUri.addSearch('Key', $scope.Detail.aemp1WithAido1.Key);
+            objUri.addSearch('TableName', $scope.Detail.aemp1WithAido1.TableName);
+            ApiService.Post(objUri, jsonData, true).then(function success(result) {
+                PopupService.Info(null, 'Upload Successfully', '').then(function () {
+                    $scope.closeModal();
+                });
             });
         };
         $scope.showActionSheet = function () {
@@ -295,8 +301,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
 
                         } else {
                             $state.go('upload', {
-                                // 'BookingNo': $scope.Detail.csbk1.BookingNo,
-                                // 'JobNo': 1
+                                'Key': $scope.Detail.aemp1WithAido1.Key,
+                                'TableName': $scope.Detail.aemp1WithAido1.TableName
                             }, {});
                         }
                     }
@@ -470,10 +476,21 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
 
 app.controller('UploadCtrl', ['ENV', '$scope', '$state', '$stateParams', '$ionicPopup', 'FileUploader', 'ApiService', 'PopupService',
     function (ENV, $scope, $state, $stateParams, $ionicPopup, FileUploader, ApiService, PopupService) {
+        $scope.UploadPhoto = {
+            Key: $stateParams.Key,
+            TableName: $stateParams.TableName
+        };
         $scope.returnDoc = function () {
-            $state.go('jobListingDetail', {}, {});
+            $state.go('jobListingDetail', {
+                'key': $scope.UploadPhoto.Key
+            }, {
+                reload: true
+            });
         };
         var uri = '';
+        uri = ApiService.Uri(true, '/api/tms/upload/img');
+        uri.addSearch('Key', $scope.UploadPhoto.Key);
+        uri.addSearch('TableName', $scope.UploadPhoto.TableName);
         var uploader = $scope.uploader = new FileUploader({
             url: ApiService.Url(uri)
         });

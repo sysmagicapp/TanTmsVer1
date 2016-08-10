@@ -222,7 +222,7 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                 controller: 'JoblistingDetailCtrl'
             })
             .state('upload', {
-                url: '/Upload/:BookingNo/:JobNo',
+                url: '/Upload/:Key/:TableName',
                 templateUrl: 'view/joblisting/Upload.html',
                 controller: 'UploadCtrl'
             })
