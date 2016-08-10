@@ -28,6 +28,8 @@ namespace WebApi.ServiceModel.Tables
         public string DeliveryToAddress4 { get; set; }
         public string StatusCode { get; set; }
         public string CancelDescription { get; set; }
+        public string DriverCode { get; set; }
+        public string FilterTime { get; set; }
 
 
     }

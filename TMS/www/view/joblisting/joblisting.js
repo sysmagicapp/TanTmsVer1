@@ -17,15 +17,15 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                 status: {
                     inprocess: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? false : true,
                     success: is.equal(objAemp1WithAido1.StatusCode, 'POD') ? true : false,
-                    failed: is.equal(objAemp1WithAido1.StatusCode, 'Cancel') ? true : false,
+                    failed: is.equal(objAemp1WithAido1.StatusCode, 'CANCEL') ? true : false,
                 }
             };
             return jobs;
         };
 
         var getHmAemp1WithAido1 = function () {
-            // var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "'";  // not record
-            SqlService.Select('Aemp1_Aido1', '*').then(function (results) {
+            var strSqlFilter = "FilterTime='" + moment(new Date()).format('YYYYMMDD') + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
+            SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
                 if (results.rows.length > 0) {
                     for (var i = 0; i < results.rows.length; i++) {
                         var Aemp1WithAido1 = results.rows.item(i);
@@ -52,6 +52,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
         };
         var showAemp1WithAido1 = function () {
             var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
+            objUri.addSearch('DriverCode', sessionStorage.getItem("sessionDriverCode"));
             ApiService.Get(objUri, true).then(function success(result) {
                 var results = result.data.results;
                 if (is.not.empty(results)) {
@@ -66,7 +67,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                         }
                     }
                 } else {
-                    var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "'";
+                    var strSqlFilter = "FilterTime='" + moment(new Date()).format('YYYYMMDD') + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
                     SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
                         if (results.rows.length > 0) {
                             for (var i = 0; i < results.rows.length; i++) {
@@ -166,11 +167,10 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
         $scope.cancelJmjm3sItem = {
             NewItem: 'Address',
             Remark: '',
-            CancelDescription: $scope.Detail.aemp1WithAido1.CancelDescription
+
         };
 
         $ionicPlatform.ready(function () {
-            //  var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "' and  key='" + $scope.Detail.aemp1WithAido1.Key+ "' ";  // not record
             var strSqlFilter = "key='" + $scope.Detail.aemp1WithAido1.Key + "' ";
             SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
                 if (results.rows.length > 0) {
@@ -327,20 +327,34 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                     onTap: function (e) {
                         for (var i in $scope.cancelJmjm3s) {
                             if ($scope.cancelJmjm3sItem.NewItem === $scope.cancelJmjm3s[i].value) {
+                                $scope.Detail.aemp1WithAido1.CancelDescription = $scope.cancelJmjm3s[i].text;
                                 if ($scope.cancelJmjm3sItem.NewItem === "Remark") {
-                                    $scope.cancelJmjm3sItem.CancelDescription = $scope.cancelJmjm3sItem.Remark;
-                                } else {
-                                    $scope.cancelJmjm3sItem.CancelDescription = $scope.cancelJmjm3s[i].text;
+                                    $scope.Detail.aemp1WithAido1.CancelDescription = $scope.Detail.aemp1WithAido1.Remark;
                                 }
                             }
                         }
                         var Aemp1WithAido1Filter = "Key='" + $scope.Detail.aemp1WithAido1.Key + "' and  TableName='" + $scope.Detail.aemp1WithAido1.TableName + "' "; // not record
                         var objAemp1WithAido1 = {
-                            CancelDescription: $scope.cancelJmjm3sItem.CancelDescription,
-                            StatusCode: 'Cancel'
+                            Remark: $scope.Detail.aemp1WithAido1.Remark,
+                            CancelDescription: $scope.Detail.aemp1WithAido1.CancelDescription,
+                            StatusCode: 'CANCEL'
                         };
-                        SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
-
+                        SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {
+                            if (is.not.undefined(res)) {
+                                $scope.Detail.aemp1WithAido1.StatusCode = 'CANCEL';
+                                var arrAem1WithAido1 = [];
+                                arrAem1WithAido1.push($scope.Detail.aemp1WithAido1);
+                                var jsonData = {
+                                    "UpdateAllString": JSON.stringify(arrAem1WithAido1)
+                                };
+                                var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1/update');
+                                ApiService.Post(objUri, jsonData, true).then(function success(result) {
+                                    PopupService.Info(null, 'Cancel Success', '').then(function (res) {
+                                        $scope.returnList();
+                                    });
+                                });
+                            }
+                        });
                     }
                 }]
             });
@@ -375,7 +389,6 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
         };
 
         $ionicPlatform.ready(function () {
-            //  var strSqlFilter = "TimeFrom='" + moment(new Date()).format('YYYYMMDD') + "' and  key='" + $scope.Detail.aemp1WithAido1.Key+ "' ";  // not record
             var strSqlFilter = "key='" + $scope.Confirm.aemp1WithAido1.Key + "' ";
             SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
                 if (results.rows.length > 0) {

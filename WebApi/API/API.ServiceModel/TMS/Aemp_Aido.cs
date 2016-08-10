@@ -20,6 +20,7 @@ namespace WebApi.ServiceModel.TMS
         public string Remark { get; set; }
         public string TableName { get; set; }
         public string UpdateAllString { get; set; }
+        public string DriverCode { get; set; }
     }
     public class Aemp_Aido_Logic
     {
@@ -33,20 +34,22 @@ namespace WebApi.ServiceModel.TMS
                 using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
                 {
                     string strSql = "";
-                    string strAemp1Where = "Where CONVERT(varchar(20),PickupDateTime ,112)=20120829";
-                    string strAido1Where = "Where  CONVERT(varchar(20),DeliveryDate ,112)=20121129";
+                    string strAemp1Where = "Where CONVERT(varchar(20),PickupDateTime ,112)=(select convert(varchar(10),getdate(),112))  and Driver1Code ='" + request.DriverCode + "'";
+                    string strAido1Where = "Where  CONVERT(varchar(20),DeliveryDate ,112)=(select convert(varchar(10),getdate(),112))  and DriverCode ='" + request.DriverCode + "'";
                     strSql = "  select cast(TrxNo as varchar(20)) as 'Key','Aemp1' as TableName, 'Collect' as DCFlag ,'N' as UpdatedFlag ,isnull((cast(pcs as nvarchar(20))+' ' +UomCode),'') as PcsUom ," +
                         "  PickupDateTime as TimeFrom  ,  DeliveryToName as DeliveryToName, DeliveryToAddress1 as DeliveryToAddress1 , " +
                         "  DeliveryToAddress2 as DeliveryToAddress2 ,DeliveryToAddress3 as DeliveryToAddress3 ,DeliveryToAddress4 as DeliveryToAddress4 , " +
                         "  GrossWeight as Weight,Volume ,isnull(DeliveryInstruction1,'') as DeliveryInstruction1, isnull(DeliveryInstruction2,'') as DeliveryInstruction2, " +
-                        "  isnull(DeliveryInstruction3, '') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag ,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aemp1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  " +
+                        "  isnull(DeliveryInstruction3, '') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag ,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aemp1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  , " +
+                        "  Driver1Code as  DriverCode , CONVERT(varchar(20),PickupDateTime ,112) as FilterTime" +
                         "  from Aemp1 " + strAemp1Where + "" +
                         "  UNION all " +
                         "  select DeliveryOrderNo as 'Key','Aido1' as TableName, 'Deliver' as DCFlag ,'N' as UpdatedFlag ,isnull((cast(OriginalPcs as nvarchar(20)) + ' ' + OriginCode),'') as PcsUom , " +
                         "  DeliveryDate as TimeFrom  ,  DeliveryToName as DeliveryToName, DeliveryToAddress1 as DeliveryToAddress1 ,  " +
                         "  DeliveryToAddress2 as DeliveryToAddress2 ,DeliveryToAddress3 as DeliveryToAddress3 ,DeliveryToAddress4 as DeliveryToAddress4 , " +
                         "  Weight as Weight,0.0 as Volume ,isnull(DeliveryInstruction1,'') as DeliveryInstruction1, isnull(DeliveryInstruction2,'') as DeliveryInstruction2, " +
-                        "  isnull(DeliveryInstruction3,'') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aido1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription " +
+                        "  isnull(DeliveryInstruction3,'') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aido1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  , " +
+                        "  DriverCode as DriverCode , CONVERT(varchar(20),DeliveryDate ,112) as FilterTime" +
                         "  from Aido1   " + strAido1Where + "";
                     Result = db.Select<Aemp1_Aido1>(strSql);
 
@@ -100,17 +103,18 @@ namespace WebApi.ServiceModel.TMS
                             {
                                 if (ja[i]["TableName"] == null || ja[i]["TableName"].ToString() == "")
                                 { continue; }
+                                string strKey= ja[i]["Key"].ToString();
                                 string strTableName = ja[i]["TableName"].ToString();
                                 string strRemark = "";
                                 string strStatusCode = "";
-                                if (ja[i]["Remark"] == null || ja[i]["Remark"].ToString() == "")
+                                if (  ja[i]["Remark"] != null || ja[i]["Remark"].ToString() != "")
                                     strRemark = ja[i]["Remark"].ToString();
-                                if (ja[i]["StatusCode"] == null || ja[i]["StatusCode"].ToString() == "")
+                                if (ja[i]["StatusCode"] != null || ja[i]["StatusCode"].ToString() != "")
                                     strStatusCode = ja[i]["StatusCode"].ToString();
                                 if (strStatusCode.ToLower() == "cancel")
                                 {
                                     string strJobNo = "";
-                                    if (ja[i]["JobNo"] == null || ja[i]["JobNo"].ToString() == "")
+                                    if (ja[i]["JobNo"] != null || ja[i]["JobNo"].ToString() != "")
                                         strJobNo = ja[i]["JobNo"].ToString();
                                     if (strJobNo != "")
                                     {
@@ -133,6 +137,20 @@ namespace WebApi.ServiceModel.TMS
                                             Remark = Modfunction.SQLSafe(strRemark),
                                             Description = ja[0]["CancelDescription"] == null ? "" : Modfunction.SQLSafe(ja[0]["CancelDescription"].ToString())
                                         });
+                                        if (strTableName == "Aemp1")
+                                        {
+
+                                            db.Update(strTableName,
+                                              " Remark = '" + Modfunction.SQLSafe(strRemark) + "'",
+                                              " TrxNo='" + strKey + "'");
+                                        }
+                                        else
+                                        {
+                                            db.Update(strTableName,
+                                              " Remark = '" + Modfunction.SQLSafe(strRemark) + "'",
+                                              " DeliveryOrderNo='" + strKey + "'");
+                                        }
+
                                     }
                                 }
                                 else
@@ -141,13 +159,13 @@ namespace WebApi.ServiceModel.TMS
                                     {
 
                                         db.Update(strTableName,
-                                            " Remark = '" + Modfunction.SQLSafe(strRemark) + "',StatusCode = '" + strStatusCode + "'",
+                                          " Remark = '" + Modfunction.SQLSafe(strRemark) + "',StatusCode = '" + strStatusCode + "'",
                                           " TrxNo='" + request.Key + "'");
                                     }
                                     else
                                     {
                                         db.Update(request.TableName,
-                                           " Remark = '" + Modfunction.SQLSafe(strRemark) + "',StatusCode = '" + strStatusCode + "'",
+                                          " Remark = '" + Modfunction.SQLSafe(strRemark) + "',StatusCode = '" + strStatusCode + "'",
                                           " DeliveryOrderNo='" + request.Key + "'");
                                     }
                                 }

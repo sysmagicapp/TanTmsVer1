@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col ">
 
-                          <p>Pcs: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
+                        <p>Pcs: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
                     </div>
                     <!-- <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.PcsUom"></span></p>
@@ -31,13 +31,13 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                    <p>    Weight:</p>
+                        <p> Weight:</p>
                     </div>
                     <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.Weight"></span></p>
                     </div>
                     <div class="col">
-                      <p>    Volume:</p>
+                        <p> Volume:</p>
                     </div>
                     <div class="col">
                         <p><span ng-bind="Detail.aemp1WithAido1.Volume"></span></p>
@@ -102,13 +102,9 @@
         </ion-modal-view>
     </script>
     <script id="popup-cancel.html" type="text/ng-template">
-      <ion-radio ng-repeat="item in cancelJmjm3s"
-               ng-value="item.value"
-       ng-model="cancelJmjm3sItem.NewItem">
-      {{ item.text }}
-    </ion-radio>
-
-   <input ng-model="cancelJmjm3sItem.Remark" type="text" placeholder="Remark" ng-show="cancelJmjm3sItem.NewItem =='Remark'" >
-
+        <ion-radio ng-repeat="item in cancelJmjm3s" ng-value="item.value" ng-model="cancelJmjm3sItem.NewItem">
+            {{ item.text }}
+        </ion-radio>
+        <!-- <input ng-model="cancelJmjm3sItem.Remark" type="text" placeholder="Remark" ng-show="cancelJmjm3sItem.NewItem =='Remark'" > -->
     </script>
 </ion-view>
