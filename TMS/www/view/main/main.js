@@ -20,7 +20,7 @@ app.controller( 'MainCtrl', [ '$scope', '$state', '$ionicPopup','PopupService',
             $state.go( 'agentjobListing', {}, {} );
         };
         $scope.func_Reports = function () {
-              PopupService.Info( null,'Stay Tuned' );
+              $state.go( 'dailycompleted', {}, {} );
         };
         $scope.func_Setting = function () {
             PopupService.Info( null,'Stay Tuned' );

@@ -235,7 +235,12 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-
+            .state( 'dailycompleted', {
+                    url: '/dailycompleted/dailylist',
+                    cache: 'false',
+                    templateUrl: 'view/dailycompleted/dailylist.html',
+                    controller: 'dailycompletedCtrl'
+                } )
         .state('jobListingConfirm', {
                 url: '/joblisting/confirm/:key',
                 cache: 'false',

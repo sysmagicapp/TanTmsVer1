@@ -1,6 +1,6 @@
 'use strict';
-app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading', '$ionicPopup', '$ionicFilterBar', '$ionicActionSheet', 'ApiService', '$ionicPlatform', '$cordovaSQLite', 'SqlService',
-    function (ENV, $scope, $state, $ionicLoading, $ionicPopup, $ionicFilterBar, $ionicActionSheet, ApiService, $ionicPlatform, $cordovaSQLite, SqlService) {
+app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading', '$ionicPopup', '$ionicFilterBar', '$ionicActionSheet', '$cordovaNetwork', 'ApiService', '$ionicPlatform', '$cordovaSQLite', 'SqlService',
+    function (ENV, $scope, $state, $ionicLoading, $ionicPopup, $ionicFilterBar, $ionicActionSheet, $cordovaNetwork, ApiService, $ionicPlatform, $cordovaSQLite, SqlService) {
         var filterBarInstance = null;
         var dataResults = new Array();
         var hmAemp1WithAido1 = new HashMap();
@@ -30,6 +30,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                     for (var i = 0; i < results.rows.length; i++) {
                         var Aemp1WithAido1 = results.rows.item(i);
                         hmAemp1WithAido1.set(Aemp1WithAido1.Key, Aemp1WithAido1.Key);
+                        hmAemp1WithAido1.set(Aemp1WithAido1.TableName, Aemp1WithAido1.TableName);
                     }
                 }
             });
@@ -51,34 +52,65 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
             });
         };
         var showAemp1WithAido1 = function () {
-            var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
-            objUri.addSearch('DriverCode', sessionStorage.getItem("sessionDriverCode"));
-            ApiService.Get(objUri, true).then(function success(result) {
-                var results = result.data.results;
-                if (is.not.empty(results)) {
-                    for (var i = 0; i < results.length; i++) {
-                        var objAemp1WithAido1 = results[i];
-                        var jobs = getObjAemp1WithAido1(results[i]);
-                        dataResults = dataResults.concat(jobs);
-                        $scope.jobs = dataResults;
-                        if (!hmAemp1WithAido1.has(objAemp1WithAido1.Key)) {
-                            SqlService.Insert('Aemp1_Aido1', objAemp1WithAido1).then(function (res) {});
-                            getSignature(objAemp1WithAido1);
-                        }
-                    }
+            if (!ENV.fromWeb) {
+                if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                    ENV.wifi = false;
                 } else {
-                    var strSqlFilter = "FilterTime='" + moment(new Date()).format('YYYYMMDD') + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
-                    SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
-                        if (results.rows.length > 0) {
-                            for (var i = 0; i < results.rows.length; i++) {
-                                var objAemp1WithAido1 = getObjAemp1WithAido1(results.rows.item(i));
-                                dataResults = dataResults.concat(objAemp1WithAido1);
-                            }
-                            $scope.jobs = dataResults;
-                        }
-                    });
+                    ENV.wifi = true;
+
                 }
-            });
+            }
+            if (ENV.wifi === true) {
+                var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
+                objUri.addSearch('DriverCode', sessionStorage.getItem("sessionDriverCode"));
+                ApiService.Get(objUri, true).then(function success(result) {
+                    var results = result.data.results;
+                    var NotEmptyInsert = "";
+                    if (is.not.empty(results)) {
+                        SqlService.Select('Aemp1_Aido1', '*').then(function (res) {
+                            if (res.rows.length > 0) {
+                                NotEmptyInsert = "Y";
+                            }
+                        });
+                        for (var i = 0; i < results.length; i++) {
+                            var objAemp1WithAido1 = results[i];
+                            var jobs = getObjAemp1WithAido1(results[i]);
+                            dataResults = dataResults.concat(jobs);
+                            $scope.jobs = dataResults;
+                            if (!hmAemp1WithAido1.has(objAemp1WithAido1.Key) && !hmAemp1WithAido1.has(objAemp1WithAido1.TableName)) {
+                                if (NotEmptyInsert === "Y") {
+                                    console.log('NotEmptyInsert');
+                                }
+                                SqlService.Insert('Aemp1_Aido1', objAemp1WithAido1).then(function (res) {});
+                                getSignature(objAemp1WithAido1);
+                            }
+                        }
+                    } else {
+                        var strSqlFilter = " FilterTime='" + moment(new Date()).format('YYYYMMDD') + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
+                        SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                            if (results.rows.length > 0) {
+                                for (var i = 0; i < results.rows.length; i++) {
+                                    var objAemp1WithAido1 = getObjAemp1WithAido1(results.rows.item(i));
+                                    dataResults = dataResults.concat(objAemp1WithAido1);
+                                    $scope.jobs = dataResults;
+                                }
+
+                            }
+                        });
+                    }
+                });
+            } else {
+                var strSqlFilter = " FilterTime='" + moment(new Date()).format('YYYYMMDD') + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
+                SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                    if (results.rows.length > 0) {
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var objAemp1WithAido1 = getObjAemp1WithAido1(results.rows.item(i));
+                            dataResults = dataResults.concat(objAemp1WithAido1);
+                        }
+                        $scope.jobs = dataResults;
+                    }
+                });
+            }
         };
         showAemp1WithAido1();
         getHmAemp1WithAido1();
@@ -339,14 +371,25 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                                 }
                             }
                         }
+                        var UpdatedValue = 'Y';
+                        if (!ENV.fromWeb) {
+                            if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                                ENV.wifi = false;
+                                UpdatedValue = 'N';
+                            } else {
+                                ENV.wifi = true;
+                            }
+                        }
                         var Aemp1WithAido1Filter = "Key='" + $scope.Detail.aemp1WithAido1.Key + "' and  TableName='" + $scope.Detail.aemp1WithAido1.TableName + "' "; // not record
                         var objAemp1WithAido1 = {
                             Remark: $scope.Detail.aemp1WithAido1.Remark,
                             CancelDescription: $scope.Detail.aemp1WithAido1.CancelDescription,
-                            StatusCode: 'CANCEL'
+                            StatusCode: 'CANCEL',
+                            UpdatedFlag: UpdatedValue,
+                            Key: $scope.Detail.aemp1WithAido1.Key
                         };
                         SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {
-                            if (is.not.undefined(res)) {
+                            if (UpdatedValue === 'Y' && is.not.undefined(res)) {
                                 $scope.Detail.aemp1WithAido1.StatusCode = 'CANCEL';
                                 var arrAem1WithAido1 = [];
                                 arrAem1WithAido1.push($scope.Detail.aemp1WithAido1);
@@ -358,6 +401,10 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                                     PopupService.Info(null, 'Cancel Success', '').then(function (res) {
                                         $scope.returnList();
                                     });
+                                });
+                            } else if (UpdatedValue === 'N') {
+                                PopupService.Info(null, 'Cancel Success', '').then(function (res) {
+                                    $scope.returnList();
                                 });
                             }
                         });
@@ -442,26 +489,38 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
             if (is.not.null($scope.signature)) {
                 signature = $scope.signature.split(',')[1];
             }
+            var UpdatedValue = 'Y';
+            if (!ENV.fromWeb) {
+                if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                    ENV.wifi = false;
+                    UpdatedValue = 'N';
+                } else {
+                    ENV.wifi = true;
+                }
+            }
             var Aemp1WithAido1Filter = "Key='" + $scope.Confirm.aemp1WithAido1.Key + "' and  TableName='" + $scope.Confirm.aemp1WithAido1.TableName + "' "; // not record
             var objAemp1WithAido1 = {
                 StatusCode: 'POD',
-                TempBase64: signature
+                TempBase64: signature,
+                UpdatedFlag: UpdatedValue
             };
             SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {});
-            var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1/confirm');
-            objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
-            objUri.addSearch('Remark', $scope.Confirm.aemp1WithAido1.Remark);
-            objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
-            ApiService.Get(objUri, true).then(function success(result) {});
-            var jsonData = {
-                'Base64': $scope.signature,
-                'FileName': 'signature.Png'
-            };
-            if ($scope.signature !== null && is.not.equal($scope.signature, '') && is.not.undefined($scope.signature)) {
-                objUri = ApiService.Uri(true, '/api/tms/upload/img');
-                objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+            if (UpdatedValue === 'Y') {
+                var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1/confirm');
                 objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
-                ApiService.Post(objUri, jsonData, true).then(function success(result) {});
+                objUri.addSearch('Remark', $scope.Confirm.aemp1WithAido1.Remark);
+                objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+                ApiService.Get(objUri, true).then(function success(result) {});
+                var jsonData = {
+                    'Base64': $scope.signature,
+                    'FileName': 'signature.Png'
+                };
+                if ($scope.signature !== null && is.not.equal($scope.signature, '') && is.not.undefined($scope.signature)) {
+                    objUri = ApiService.Uri(true, '/api/tms/upload/img');
+                    objUri.addSearch('Key', $scope.Confirm.aemp1WithAido1.Key);
+                    objUri.addSearch('TableName', $scope.Confirm.aemp1WithAido1.TableName);
+                    ApiService.Post(objUri, jsonData, true).then(function success(result) {});
+                }
             }
             PopupService.Info(null, 'Confirm Success', '').then(function (res) {
                 $scope.returnList();

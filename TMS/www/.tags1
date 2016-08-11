@@ -4,54 +4,61 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-returnMain	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnMain = function () {$/;"	function	line:6
-getBookingNo	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var getBookingNo = function () {$/;"	function	line:11
-deleteCsbk1	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.deleteCsbk1 = function (index, job) {$/;"	function	line:55
-showFilterBar	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showFilterBar = function () {$/;"	function	line:60
-expression	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                expression: function (filterText, value, index, array) {$/;"	function	line:63
-update	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                update: function (filteredItems, filterText) {$/;"	function	line:67
-refreshItems	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.refreshItems = function () {$/;"	function	line:76
-$timeout	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            $timeout(function () {$/;"	function	line:81
-gotoDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoDetail = function (job) {$/;"	function	line:87
-returnSearch	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnSearch = function () {$/;"	function	line:104
-gotoDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoDetail = function (job) {$/;"	function	line:109
-showCamera	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var showCamera = function (type) {$/;"	function	line:138
-showTobk	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var showTobk = function () {$/;"	function	line:186
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:212
-checkStatusCode	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var checkStatusCode = function (StatusCode) {$/;"	function	line:262
-SMS	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var SMS = function () {$/;"	function	line:269
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            var success = function () {};$/;"	function	line:282
-error	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            var error = function (e) {};$/;"	function	line:283
-takePhoto	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.takePhoto = function () {$/;"	function	line:303
-reCapture	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.reCapture = function () {$/;"	function	line:308
-uploadPhoto	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.uploadPhoto = function () {$/;"	function	line:312
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            ApiService.Post(objUri, jsonData, true).then(function success(result) {$/;"	function	line:318
-showActionSheet	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showActionSheet = function () {$/;"	function	line:324
-cancel	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                cancel: function () {$/;"	function	line:334
-buttonClicked	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                buttonClicked: function (index) {$/;"	function	line:337
-closeModal	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.closeModal = function () {$/;"	function	line:362
-showActionSheet1	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.showActionSheet1 = function () {$/;"	function	line:365
-cancel	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                cancel: function () {$/;"	function	line:376
-buttonClicked	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                buttonClicked: function (index) {$/;"	function	line:379
-gotoConfirm	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.gotoConfirm = function () {$/;"	function	line:389
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                ApiService.Get(objUri, false).then(function success(result) {$/;"	function	line:428
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                        ApiService.Get(objUri, false).then(function success(result) {});$/;"	function	line:435
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:445
-returnList	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnList = function () {$/;"	function	line:482
-checkQty	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.checkQty = function (csbk2) {$/;"	function	line:485
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:493
-resizeCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        function resizeCanvas() {$/;"	function	line:551
-getSignature	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        var getSignature = function () {$/;"	function	line:557
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:560
-returnList	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnList = function () {$/;"	function	line:568
-returnDetail	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnDetail = function () {$/;"	function	line:571
-clearCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.clearCanvas = function () {$/;"	function	line:578
-saveCanvas	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.saveCanvas = function () {$/;"	function	line:582
-confirm	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.confirm = function () {$/;"	function	line:588
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:602
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Post(objUri, jsonData, true).then(function success(result) {});$/;"	function	line:608
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                            ApiService.Get(objUri, true).then(function success(result) {$/;"	function	line:622
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                                    ApiService.Get(objUri, false).then(function success(result) {});$/;"	function	line:629
-success	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^                    ApiService.Get(objUri, true).then(function success(result) {});$/;"	function	line:644
-returnDoc	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        $scope.returnDoc = function () {$/;"	function	line:661
-onSuccessItem	C:\Users\Administrator\Desktop\JollyBCSBK\DeliveryApp-JollyB\TMS\www\view\joblisting\joblisting.js	/^        uploader.onSuccessItem = function (fileItem, response, status, headers) {$/;"	function	line:672
+html	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^<html>$/;"	function	line:2
+head	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^<head>$/;"	function	line:4
+meta	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <meta charset="utf-8">$/;"	function	line:5
+meta	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=no, width=device-width">$/;"	function	line:6
+meta	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">$/;"	function	line:7
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="dns-prefetch" href="\/\/sysfreight.net">$/;"	function	line:8
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="dns-prefetch" href="\/\/www.sysfreight.net">$/;"	function	line:9
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="lib\/bootstrap\/dist\/css\/bootstrap.min.css">$/;"	function	line:10
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="lib\/ionic\/release\/css\/ionic.min.css">$/;"	function	line:11
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="lib\/ion-md-input\/css\/ion-md-input.min.css">$/;"	function	line:12
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="lib\/ionic-filter-bar\/dist\/ionic.filter.bar.css">$/;"	function	line:13
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="lib\/angular-ui-select\/dist\/select.min.css">$/;"	function	line:14
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="css\/iconfont.css">$/;"	function	line:15
+link	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <link rel="stylesheet" href="css\/app.css">$/;"	function	line:16
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ionic\/release\/js\/ionic.bundle.min.js"><\/script>$/;"	function	line:17
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ngCordova\/dist\/ng-cordova.min.js"><\/script>$/;"	function	line:18
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ion-md-input\/js\/ion-md-input.min.js"><\/script>$/;"	function	line:19
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ionic-ion-header-shrink\/ionic.headerShrink.js"><\/script>$/;"	function	line:20
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ionic-filter-bar\/dist\/ionic.filter.bar.js"><\/script>$/;"	function	line:21
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="cordova.js"><\/script>$/;"	function	line:22
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/jquery\/dist\/jquery.min.js"><\/script>$/;"	function	line:23
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ionic-datepicker\/dist\/ionic-datepicker.bundle.min.js"><\/script>$/;"	function	line:24
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/angular-messages\/angular-messages.min.js"><\/script>$/;"	function	line:25
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ionic-image-lazy-load\/ionic-image-lazy-load.js"><\/script>$/;"	function	line:26
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/angular-file-upload\/dist\/angular-file-upload.min.js"><\/script>$/;"	function	line:27
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/angular-ui-select\/dist\/select.min.js"><\/script>$/;"	function	line:28
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/moment\/min\/moment-with-locales.min.js"><\/script>$/;"	function	line:29
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/is_js\/is.min.js"><\/script>$/;"	function	line:30
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/hashmap\/hashmap.js"><\/script>$/;"	function	line:31
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/signature_pad\/signature_pad.min.js"><\/script>$/;"	function	line:32
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/urijs\/src\/URI.min.js"><\/script>$/;"	function	line:33
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/echarts\/dist\/echarts.min.js"><\/script>$/;"	function	line:34
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/qrcode.js"><\/script>$/;"	function	line:35
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/md5.js"><\/script>$/;"	function	line:36
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/base.js"><\/script>$/;"	function	line:37
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/config.js"><\/script>$/;"	function	line:38
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/app.js"><\/script>$/;"	function	line:39
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/services.js"><\/script>$/;"	function	line:40
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/factories.js"><\/script>$/;"	function	line:41
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="js\/directives.js"><\/script>$/;"	function	line:42
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/splash\/splash.js"><\/script>$/;"	function	line:43
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/menu\/menu.js"><\/script>$/;"	function	line:44
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/login\/login.js"><\/script>$/;"	function	line:45
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/main\/main.js"><\/script>$/;"	function	line:46
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/joblisting\/joblisting.js"><\/script>$/;"	function	line:47
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/setting\/setting.js"><\/script>$/;"	function	line:48
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/updateApp\/update.js"><\/script>$/;"	function	line:49
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/reports\/reports.js"><\/script>$/;"	function	line:50
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/agent\/agentjoblisting.js"><\/script>$/;"	function	line:51
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/googleMaps\/googleMaps.js"><\/script>$/;"	function	line:52
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="lib\/ngCordova\/dist\/ng-cordova.js"><\/script>$/;"	function	line:53
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script src="view\/dailycompleted\/dailycompleted.js"><\/script>$/;"	function	line:54
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^  <script src="http:\/\/maps.google.com\/maps\/api\/js?key=AIzaSyAGntBqvv-HLVxBC0MQc8ugh1pc4wWz2AQ"><\/script>$/;"	function	line:55
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^<script>$/;"	function	line:56
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script type="text\/javascript" src="https:\/\/dn-bughd-web.qbox.me\/bughd.min.js" crossOrigin="anonymous"><\/script>$/;"	function	line:59
+script	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <script type="text\/javascript">$/;"	function	line:60
+body	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^<body ng-app="TMS" ng-cloak>$/;"	function	line:72
+ion	C:\Users\Administrator\Desktop\TAN TMS\TanTms\TMS\www\index.html	/^    <ion-nav-view><\/ion-nav-view>$/;"	function	line:73
