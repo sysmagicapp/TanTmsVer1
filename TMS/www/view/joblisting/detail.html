@@ -9,8 +9,8 @@
         <div style="height: 43px;"></div>
         <div class="card">
             <div class="button-bar">
-                <!-- <a class="button" ng-href="{{Detail.csbk1.Rcbp1PhoneNumber}}"> -->
-          <a class="button" ng-href="tel:0123456789010">
+                <a class="button" ng-href="tel:{{Detail.aemp1WithAido1.PhoneNumber}}">
+           <!-- <a class="button" ng-href="tel:0123456789010"> -->
                     CALL
                 </a>
                 <button class="button" ng-click="showGoogleMaps()">
@@ -107,5 +107,7 @@
             {{ item.text }}
         </ion-radio>
         <!-- <input ng-model="cancelJmjm3sItem.Remark" type="text" placeholder="Remark" ng-show="cancelJmjm3sItem.NewItem =='Remark'" > -->
+        <textarea wrap="hard" cols="48px" ng-model="cancelJmjm3sItem.Remark" ng-show="cancelJmjm3sItem.NewItem =='Remark'"  rows="4">
+        </textarea>
     </script>
 </ion-view>

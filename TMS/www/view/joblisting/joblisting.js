@@ -57,7 +57,6 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                     ENV.wifi = false;
                 } else {
                     ENV.wifi = true;
-
                 }
             }
             if (ENV.wifi === true) {
@@ -81,8 +80,10 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                                 if (NotEmptyInsert === "Y") {
                                     console.log('NotEmptyInsert');
                                 }
+                                console.log('111');
                                 SqlService.Insert('Aemp1_Aido1', objAemp1WithAido1).then(function (res) {});
                                 getSignature(objAemp1WithAido1);
+                                console.log('222');
                             }
                         }
                     } else {
@@ -112,6 +113,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                 });
             }
         };
+
         showAemp1WithAido1();
         getHmAemp1WithAido1();
 
@@ -352,6 +354,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
         };
 
         $scope.cancel = function () {
+        if( is.not.equal($scope.Detail.aemp1WithAido1.StatusCode,'POD')) {
             var myPopup = $ionicPopup.show({
                 templateUrl: 'popup-cancel.html',
                 title: 'Select  Item',
@@ -367,7 +370,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                             if ($scope.cancelJmjm3sItem.NewItem === $scope.cancelJmjm3s[i].value) {
                                 $scope.Detail.aemp1WithAido1.CancelDescription = $scope.cancelJmjm3s[i].text;
                                 if ($scope.cancelJmjm3sItem.NewItem === "Remark") {
-                                    $scope.Detail.aemp1WithAido1.CancelDescription = $scope.Detail.aemp1WithAido1.Remark;
+                                    $scope.Detail.aemp1WithAido1.CancelDescription = $scope.cancelJmjm3sItem.Remark;
                                 }
                             }
                         }
@@ -385,8 +388,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                             Remark: $scope.Detail.aemp1WithAido1.Remark,
                             CancelDescription: $scope.Detail.aemp1WithAido1.CancelDescription,
                             StatusCode: 'CANCEL',
-                            UpdatedFlag: UpdatedValue,
-                            Key: $scope.Detail.aemp1WithAido1.Key
+                            UpdatedFlag: UpdatedValue
                         };
                         SqlService.Update('Aemp1_Aido1', objAemp1WithAido1, Aemp1WithAido1Filter).then(function (res) {
                             if (UpdatedValue === 'Y' && is.not.undefined(res)) {
@@ -408,9 +410,13 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
                                 });
                             }
                         });
+
                     }
                 }]
             });
+          }else {
+            $scope.returnList();
+          }
         };
 
         $scope.gotoConfirm = function () {

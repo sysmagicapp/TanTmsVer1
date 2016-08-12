@@ -48,6 +48,7 @@ appFactory.factory('TABLE_DB', function () {
             CancelDescription:'TEXT',
             DriverCode:'TEXT',
             FilterTime:'TEXT',
+            PhoneNumber:'TEXT',
             TempBase64:'TEXT',
         }
 

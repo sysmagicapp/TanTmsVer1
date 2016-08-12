@@ -30,6 +30,7 @@ namespace WebApi.ServiceModel.Tables
         public string CancelDescription { get; set; }
         public string DriverCode { get; set; }
         public string FilterTime { get; set; }
+        public string PhoneNumber { get; set; }
 
 
     }

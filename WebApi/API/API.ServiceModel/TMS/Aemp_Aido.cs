@@ -41,7 +41,8 @@ namespace WebApi.ServiceModel.TMS
                         "  DeliveryToAddress2 as DeliveryToAddress2 ,DeliveryToAddress3 as DeliveryToAddress3 ,DeliveryToAddress4 as DeliveryToAddress4 , " +
                         "  GrossWeight as Weight,Volume ,isnull(DeliveryInstruction1,'') as DeliveryInstruction1, isnull(DeliveryInstruction2,'') as DeliveryInstruction2, " +
                         "  isnull(DeliveryInstruction3, '') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag ,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aemp1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  , " +
-                        "  Driver1Code as  DriverCode , CONVERT(varchar(20),PickupDateTime ,112) as FilterTime" +
+                        "  Driver1Code as  DriverCode , CONVERT(varchar(20),PickupDateTime ,112) as FilterTime , " +
+                        "  isnull((select top 1 case isnull(Rcbp1.Handphone1, '') when '' then isnull(Rcbp1.Telephone, '')  else Rcbp1.Handphone1 end   from rcbp1 where rcbp1.BusinessPartyCode = aemp1.CollectFromCode ), '')  AS PhoneNumber" +
                         "  from Aemp1 " + strAemp1Where + "" +
                         "  UNION all " +
                         "  select DeliveryOrderNo as 'Key','Aido1' as TableName, 'Deliver' as DCFlag ,'' as UpdatedFlag ,isnull((cast(OriginalPcs as nvarchar(20)) + ' ' + OriginCode),'') as PcsUom , " +
@@ -49,7 +50,8 @@ namespace WebApi.ServiceModel.TMS
                         "  DeliveryToAddress2 as DeliveryToAddress2 ,DeliveryToAddress3 as DeliveryToAddress3 ,DeliveryToAddress4 as DeliveryToAddress4 , " +
                         "  Weight as Weight,0.0 as Volume ,isnull(DeliveryInstruction1,'') as DeliveryInstruction1, isnull(DeliveryInstruction2,'') as DeliveryInstruction2, " +
                         "  isnull(DeliveryInstruction3,'') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aido1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  , " +
-                        "  DriverCode as DriverCode , CONVERT(varchar(20),DeliveryDate ,112) as FilterTime" +
+                        "  DriverCode as DriverCode , CONVERT(varchar(20),DeliveryDate ,112) as FilterTime , " +
+                        "  isnull((select top 1 case isnull(Rcbp1.Handphone1, '') when '' then isnull(Rcbp1.Telephone, '')  else Rcbp1.Handphone1 end   from rcbp1 where rcbp1.BusinessPartyCode = aido1.DeliveryToCode ), '')  AS PhoneNumber" +
                         "  from Aido1   " + strAido1Where + "";
                     Result = db.Select<Aemp1_Aido1>(strSql);
 

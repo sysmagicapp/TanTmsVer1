@@ -2,6 +2,9 @@
 app.controller('dailycompletedCtrl', ['ENV', '$scope', '$state', '$ionicPopup', '$cordovaKeyboard', '$cordovaBarcodeScanner', 'ACCEPTJOB_ORM', 'ApiService', '$cordovaSQLite', '$ionicPlatform', 'ionicDatePicker', 'SqlService',
     function (ENV, $scope, $state, $ionicPopup, $cordovaKeyboard, $cordovaBarcodeScanner, ACCEPTJOB_ORM, ApiService, $cordovaSQLite, $ionicPlatform, ionicDatePicker, SqlService) {
         var dataResults = new Array();
+        $scope.DailyCompleted={
+          aemp1WithAido1s:[]
+        };
         $scope.Search = {
             CompletedDate: moment(new Date()).format('YYYYMMDD'),
         };
@@ -25,18 +28,17 @@ app.controller('dailycompletedCtrl', ['ENV', '$scope', '$state', '$ionicPopup', 
         };
 
         var ShowDailyCompleted = function () {
-              var strSqlFilter = "UpdatedFlag != '' And FilterTime='" + $scope.Search.CompletedDate + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
-                SqlService.Select('Aemp1_Aido1', '*',strSqlFilter).then(function (results) {
-                  dataResults = new Array();
-                    if (results.rows.length > 0) {
-                        for (var i = 0; i < results.rows.length; i++) {
-                            var jobs = getObjAemp1WithAido1(results.rows.item(i));
-                            dataResults = dataResults.concat(jobs);
-                            $scope.jobs = dataResults;
-                        }
+            var strSqlFilter = "UpdatedFlag != '' And FilterTime='" + $scope.Search.CompletedDate + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
+            SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+              $scope.DailyCompleted.aemp1WithAido1s=new Array();
+                if (results.rows.length > 0) {
+                    for (var i = 0; i < results.rows.length; i++) {
+                        var jobs = getObjAemp1WithAido1(results.rows.item(i));
+                        $scope.DailyCompleted.aemp1WithAido1s.push(jobs);
                     }
-                });
-      };
+                }
+            });
+        };
 
         $scope.returnMain = function () {
             $state.go('index.main', {}, {
@@ -58,25 +60,25 @@ app.controller('dailycompletedCtrl', ['ENV', '$scope', '$state', '$ionicPopup', 
         ShowDailyCompleted();
 
         $scope.WifiConfirm = function () {
-          var strSqlFilter = "UpdatedFlag = 'N' And FilterTime='" + $scope.Search.CompletedDate + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
-            SqlService.Select('Aemp1_Aido1', '*',strSqlFilter).then(function (results) {
-              dataResults = new Array();
+            var strSqlFilter = "UpdatedFlag = 'N' And FilterTime='" + $scope.Search.CompletedDate + "' And DriverCode='" + sessionStorage.getItem("sessionDriverCode") + "'"; // not record
+            SqlService.Select('Aemp1_Aido1', '*', strSqlFilter).then(function (results) {
+                dataResults = new Array();
                 if (results.rows.length > 0) {
                     for (var i = 0; i < results.rows.length; i++) {
-                      var objAemp1WithAido1=results.rows.item(i);
+                        var objAemp1WithAido1 = results.rows.item(i);
                         dataResults.push(objAemp1WithAido1);
-                        if(objAemp1WithAido1.StatusCode==='POD'){
-                        var jsonData = {
-                            'Base64': 'data:image/png;base64,' + objAemp1WithAido1.TempBase64,
-                            'FileName': 'signature.Png'
-                        };
+                        if (objAemp1WithAido1.StatusCode === 'POD') {
+                            var jsonData = {
+                                'Base64': 'data:image/png;base64,' + objAemp1WithAido1.TempBase64,
+                                'FileName': 'signature.Png'
+                            };
 
-                        if (objAemp1WithAido1.TempBase64 !== null && is.not.equal(objAemp1WithAido1.TempBase64, '') && is.not.undefined(objAemp1WithAido1.TempBase64)) {
-                            objUri = ApiService.Uri(true, '/api/tms/upload/img');
-                            objUri.addSearch('Key', objAemp1WithAido1.Key);
-                            objUri.addSearch('TableName', objAemp1WithAido1.TableName);
-                            ApiService.Post(objUri, jsonData, true).then(function success(result) {});
-                        }
+                            if (objAemp1WithAido1.TempBase64 !== null && is.not.equal(objAemp1WithAido1.TempBase64, '') && is.not.undefined(objAemp1WithAido1.TempBase64)) {
+                                objUri = ApiService.Uri(true, '/api/tms/upload/img');
+                                objUri.addSearch('Key', objAemp1WithAido1.Key);
+                                objUri.addSearch('TableName', objAemp1WithAido1.TableName);
+                                ApiService.Post(objUri, jsonData, true).then(function success(result) {});
+                            }
                         }
                     }
                     var jsonData = {
