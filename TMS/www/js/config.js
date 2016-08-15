@@ -4,7 +4,7 @@ appConfig.constant('ENV', {
     website: 'www.sysfreight.net/app/tms/tan',
      api: 'www.sysfreight.net/apis/tms/tan',
     // api: 'http://localhost:62787/',
-    //  api:  'localhost:2442',
+      // api:  'localhost:2442',
     reset: {
         'website': 'www.sysfreight.net/app/tms/tan',
         'api': 'www.sysfreight.net/apis/tms/tan',
@@ -21,7 +21,7 @@ appConfig.constant('ENV', {
         name: 'AppTanTms.db',
         location: 'default'
     },
-    port: '8081', // http port no
+   port: '8081', // http port no
     ssl: false,
     debug: true,
     mock: false,
