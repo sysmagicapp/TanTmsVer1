@@ -71,7 +71,7 @@ namespace WebApi
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.DownLoadImg_Logic>();
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.Rcbp_Logic>();
             container.RegisterAutoWired<WebApi.ServiceModel.TMS.Aemp_Aido_Logic>();
-
+            container.RegisterAutoWired<WebApi.ServiceModel.TMS.Jmjm_logic>();
         }
         #region DES
         //private string DESKey = "F322186F";

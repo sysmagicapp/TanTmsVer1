@@ -54,6 +54,24 @@ namespace WebApi.ServiceInterface.TMS
             }
         }
 
+        public void TS_Jmjm(Auth auth, Jmjm request, Jmjm_logic jmjm_logic, CommonResponse ecr, string[] token, string uri)
+        {
+            if (auth.AuthResult(token, uri))
+            {
+                if (uri.IndexOf("/tms/jmjm1") > 0)
+                {
+                    ecr.data.results = jmjm_logic.Get_Jmjm1_List(request);
+                }
+                ecr.meta.code = 200;
+                ecr.meta.message = "OK";
+            }
+            else
+            {
+                ecr.meta.code = 401;
+                ecr.meta.message = "Unauthorized";
+            }
+        }
+
 
         public void DownLoadImg(Auth auth, DownLoadImg request, DownLoadImg_Logic logic, CommonResponse ecr, string[] token, string uri)
         {

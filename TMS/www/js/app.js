@@ -40,9 +40,13 @@ app.run(['ENV', '$ionicPlatform', '$rootScope', '$state', '$location', '$timeout
                     SqlService.Drop('Aemp1_Aido1').then(function (res) {
                         SqlService.Create('Aemp1_Aido1', TABLE_DB.Aemp1_Aido1).then(function (res) {});
                     });
+                    SqlService.Drop('Jmjm1').then(function (res) {
+                        SqlService.Create('Jmjm1', TABLE_DB.Jmjm1).then(function (res) {});
+                    });
                 } else {
                     SqlService.Create('Todr1_Rcbp1', TABLE_DB.Todr1_Rcbp1).then(function (res) {});
                     SqlService.Create('Aemp1_Aido1', TABLE_DB.Aemp1_Aido1).then(function (res) {});
+                    SqlService.Create('Jmjm1', TABLE_DB.Jmjm1).then(function (res) {});
                 }
             });
         });
@@ -235,13 +239,13 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-            .state( 'dailycompleted', {
-                    url: '/dailycompleted/dailylist',
-                    cache: 'false',
-                    templateUrl: 'view/dailycompleted/dailylist.html',
-                    controller: 'dailycompletedCtrl'
-                } )
-        .state('jobListingConfirm', {
+            .state('dailycompleted', {
+                url: '/dailycompleted/dailylist',
+                cache: 'false',
+                templateUrl: 'view/dailycompleted/dailylist.html',
+                controller: 'dailycompletedCtrl'
+            })
+            .state('jobListingConfirm', {
                 url: '/joblisting/confirm/:key',
                 cache: 'false',
                 templateUrl: 'view/joblisting/confirm.html',

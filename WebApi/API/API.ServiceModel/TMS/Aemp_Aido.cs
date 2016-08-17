@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace WebApi.ServiceModel.TMS
 {
-    [Route("/tms/aemp1withaido1", "Get")]
+    [Route("/tms/aemp1withaido1", "Get")]  //DriverCode=
     [Route("/tms/aemp1withaido1/update", "Post")] //
     [Route("/tms/aemp1withaido1/confirm", "Get")] //update?Key=,Remark=,TableName=
 
@@ -40,7 +40,7 @@ namespace WebApi.ServiceModel.TMS
                         "  PickupDateTime as TimeFrom  ,  DeliveryToName as DeliveryToName, DeliveryToAddress1 as DeliveryToAddress1 , " +
                         "  DeliveryToAddress2 as DeliveryToAddress2 ,DeliveryToAddress3 as DeliveryToAddress3 ,DeliveryToAddress4 as DeliveryToAddress4 , " +
                         "  GrossWeight as Weight,Volume ,isnull(DeliveryInstruction1,'') as DeliveryInstruction1, isnull(DeliveryInstruction2,'') as DeliveryInstruction2, " +
-                        "  isnull(DeliveryInstruction3, '') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag ,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Select Top 1 StatusCode from jmjm3 Where JobNo = Aemp1.JobNo Order By LineItemNo DESC) END AS StatusCode,'' AS CancelDescription  , " +
+                        "  isnull(DeliveryInstruction3, '') as DeliveryInstruction3,Remark as Remark,AttachmentFlag as AttachmentFlag ,isnull(JobNo,'') as JobNo,Case StatusCode When 'POD' then 'POD' Else (Case (Select Top 1 StatusCode from jmjm3 Where JobNo = Aemp1.JobNo Order By LineItemNo DESC) When 'CANCEL' then 'CANCEL' else Aemp1.StatusCode END) END AS StatusCode,'' AS CancelDescription  , " +
                         "  Driver1Code as  DriverCode , CONVERT(varchar(20),PickupDateTime ,112) as FilterTime , " +
                         "  isnull((select top 1 case isnull(Rcbp1.Handphone1, '') when '' then isnull(Rcbp1.Telephone, '')  else Rcbp1.Handphone1 end   from rcbp1 where rcbp1.BusinessPartyCode = aemp1.CollectFromCode ), '')  AS PhoneNumber" +
                         "  from Aemp1 " + strAemp1Where + "" +

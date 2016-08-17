@@ -85,6 +85,7 @@
     <Compile Include="CommonResponse.cs" />
     <Compile Include="ConfigInterface.cs" />
     <Compile Include="Tables\Aemp1_Aido1.cs" />
+    <Compile Include="Tables\Jmjm1.cs" />
     <Compile Include="Tables\Jmjm3.cs" />
     <Compile Include="Tables\Rcbp1.cs" />
     <Compile Include="Tables\Saco1.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Tables\View_Attach.cs" />
     <Compile Include="TMS\Aemp_Aido.cs" />
     <Compile Include="TMS\DownLoadImg.cs" />
+    <Compile Include="TMS\Jmjm.cs" />
     <Compile Include="TMS\Rcbp.cs" />
     <Compile Include="TMS\Tms_Login.cs" />
     <Compile Include="TMS\UploadImg.cs" />

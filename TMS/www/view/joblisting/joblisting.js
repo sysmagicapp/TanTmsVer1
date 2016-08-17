@@ -54,6 +54,7 @@ app.controller('JoblistingListCtrl', ['ENV', '$scope', '$state', '$ionicLoading'
                         for (var i = 0; i < results.rows.length; i++) {
                             var Aemp1WithAido1 = results.rows.item(i);
                             hmAemp1WithAido1.set(Aemp1WithAido1.Key, Aemp1WithAido1.Key);
+
                         }
                         var objUri = ApiService.Uri(true, '/api/tms/aemp1withaido1');
                         objUri.addSearch('DriverCode', sessionStorage.getItem("sessionDriverCode"));
@@ -170,6 +171,9 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
         };
 
         $scope.cancelJmjm3s = [{
+              text: 'Sender / Receiver Not In',
+              value: 'SenderWithReceiver'
+          }, {
             text: 'Address Not Correct',
             value: 'Address'
         }, {
@@ -190,9 +194,8 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             value: 'Remark'
         }];
         $scope.cancelJmjm3sItem = {
-            NewItem: 'Address',
+            NewItem: 'SenderWithReceiver',
             Remark: '',
-
         };
 
         $ionicPlatform.ready(function () {

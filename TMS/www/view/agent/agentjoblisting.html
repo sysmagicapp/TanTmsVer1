@@ -12,16 +12,25 @@
         <div style="height: 43px;"></div>
         <div class="list">
             <ion-list can-swipe="true" tabindex="-1" id="div-list">
+              <div class="row">
+                  <div class="col col-40">
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JobNo</p>
+                                </div>
+                  <div class="col col-60">
+                      <p>&nbsp;&nbsp;&nbsp;Customer</p>
+                                </div>
+              </div>
                 <ion-item nav-clear menu-close class="item item-icon-right" ng-repeat="job in jobs" ng-click="goAgentDetail(job)">
                     <div class="row">
                         <div class="col col-40">
-                            <p><span ng-bind="job.action"></span>&nbsp;&nbsp;<span ng-bind="job.amt"></span></p>
-                            <p><span ng-bind="job.time"></span></p>
-                            <p><span ng-bind="job.code"></span></p>
+                            <p><span ng-bind="job.JobNo" style="white-space: normal;">></span></p>
+                            <p><span ng-bind="job.ETA" style="white-space: normal;"></span></p>
+                            <p><span ng-bind="job.Pcs"></span></p>
                         </div>
                         <div class="col col-60">
-                            <p><span ng-bind="job.customer.name"></span></p>
-                            <p><span ng-bind="job.customer.address" style="    white-space: normal;"></span></p>
+                            <p><span ng-bind="job.ConsigneeName" style="white-space: normal;">></span></p>
+                            <p><span ng-bind="job.ActualArrivalDate" style="white-space: normal;">></span></p>
+                              <p><span ng-bind="job.DeliveryDate" style="white-space: normal;">></span></p>
                         </div>
                     </div>
                 </ion-item>

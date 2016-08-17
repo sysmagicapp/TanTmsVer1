@@ -1,13 +1,23 @@
-var checkDatetime = function(datetime) {
-  if (is.equal(moment(datetime).format('DD-MMM-YYYY'), '01-Jan-0001')) {
-    datetime = '';
-  }
-  if (is.not.empty(datetime)) {
-    datetime1 = moment(datetime).format('HH:mm');
-   datetime2=moment(datetime).add(2,'hours').format('HH:mm');
-   datetime=datetime1+' - '+datetime2;
-  }
-  return datetime;
+var checkDatetime = function (datetime) {
+    if (is.equal(moment(datetime).format('DD-MMM-YYYY'), '01-Jan-0001')) {
+        datetime = '';
+    }
+    if (is.not.empty(datetime)) {
+        datetime1 = moment(datetime).format('HH:mm');
+        datetime2 = moment(datetime).add(2, 'hours').format('HH:mm');
+        datetime = datetime1 + ' - ' + datetime2;
+    }
+    return datetime;
+};
+
+var checkAgentDatetime = function (datetime) {
+    if (is.equal(moment(datetime).format('DD-MMM-YYYY'), '01-Jan-0001')) {
+        datetime = '';
+    }
+    if (is.not.empty(datetime)) {
+        datetime = moment(datetime).format('DD-MMM-YYYY HH:mm');
+    }
+    return datetime;
 };
 
 var objClone = function (obj) {

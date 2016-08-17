@@ -64,6 +64,20 @@ namespace WebApi.ServiceInterface
             return ecr;
         }
 
+        public ServiceModel.TMS.Jmjm_logic tms_jmjm_Logic { get; set; }
+        public object Any(ServiceModel.TMS.Jmjm request)
+        {
+            CommonResponse ecr = new CommonResponse();
+            ecr.initial();
+            try
+            {
+                ServiceInterface.TMS.TableService ts = new ServiceInterface.TMS.TableService();
+                ts.TS_Jmjm(auth, request, tms_jmjm_Logic, ecr, this.Request.Headers.GetValues("Signature"), this.Request.RawUrl);
+            }
+            catch (Exception ex) { cr(ecr, ex); }
+            return ecr;
+        }
+
         public ServiceModel.TMS.UploadImg_Logic uploadImg_Logic { get; set; }
         public object Any(ServiceModel.TMS.UploadImg request)
         {

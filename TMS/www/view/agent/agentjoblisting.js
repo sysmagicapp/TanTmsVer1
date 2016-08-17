@@ -1,16 +1,10 @@
 'use strict';
-app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast', '$ionicFilterBar',
-    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast, $ionicFilterBar) {
+app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast', '$ionicFilterBar', '$cordovaNetwork', 'ENV', 'SqlService',
+    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast, $ionicFilterBar, $cordovaNetwork, ENV, SqlService) {
         var filterBarInstance = null;
 
         var dataResults = new Array();
-        var jobs = [{
-            TrxNo: 1,
-            bookingno: 2,
-
-        }];
-        dataResults = dataResults.concat(jobs);
-        $scope.jobs = dataResults;
+        var hmjmjm1 = new HashMap();
 
         $scope.returnMain = function () {
             $state.go('index.login', {}, {
@@ -28,7 +22,7 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
             filterBarInstance = $ionicFilterBar.show({
                 items: $scope.jobs,
                 expression: function (filterText, value, index, array) {
-                    return value.bookingno.indexOf(filterText) > -1;
+                    return value.JobNo.indexOf(filterText) > -1;
                 },
                 //filterProperties: ['bookingno'],
                 update: function (filteredItems, filterText) {
@@ -55,6 +49,86 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
                 reload: true
             });
         };
+
+        var getObjjmjm1 = function (Objjmjm1) {
+            var jobs = {
+                JobNo: Objjmjm1.JobNo,
+                ETA: checkAgentDatetime(Objjmjm1.ETA),
+                Pcs: Objjmjm1.Pcs,
+                ConsigneeName: Objjmjm1.ConsigneeName,
+                ActualArrivalDate: checkAgentDatetime(Objjmjm1.ActualArrivalDate),
+                DeliveryDate: checkAgentDatetime(Objjmjm1.DeliveryDate),
+            };
+            return jobs;
+        };
+
+        var showjmjm1 = function () {
+            if (!ENV.fromWeb) {
+                if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                    ENV.wifi = false;
+                } else {
+                    ENV.wifi = true;
+                }
+            }
+            if (ENV.wifi === true) {
+                var strSqlFilter = "DeliveryAgentCode='" + sessionStorage.getItem("sessionAgentID") + "'"; // not record
+                SqlService.Select('Jmjm1', '*', strSqlFilter).then(function (results) {
+                    if (results.rows.length > 0) {
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var jmjm1 = results.rows.item(i);
+                            hmjmjm1.set(jmjm1.JobNo, jmjm1.JobNo);
+
+                        }
+                        var objUri = ApiService.Uri(true, '/api/tms/jmjm1');
+                        objUri.addSearch('DeliveryAgentCode', sessionStorage.getItem("sessionAgentID"));
+                        ApiService.Get(objUri, true).then(function success(result) {
+                            var results = result.data.results;
+                            if (is.not.empty(results)) {
+                                for (var i = 0; i < results.length; i++) {
+                                    var objjmjm1 = results[i];
+                                    var jobs = getObjjmjm1(objjmjm1);
+                                    dataResults = dataResults.concat(jobs);
+                                    $scope.jobs = dataResults;
+                                    if (!hmjmjm1.has(objjmjm1.JobNo)) {
+                                        SqlService.Insert('jmjm1', objjmjm1).then(function (res) {});
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+                        var objUri = ApiService.Uri(true, '/api/tms/jmjm1');
+                        objUri.addSearch('DeliveryAgentCode', sessionStorage.getItem("sessionAgentID"));
+                        ApiService.Get(objUri, true).then(function success(result) {
+                            var results = result.data.results;
+                            if (is.not.empty(results)) {
+                                for (var i = 0; i < results.length; i++) {
+                                    var objjmjm1 = results[i];
+                                    var jobs = getObjjmjm1(results[i]);
+                                    dataResults = dataResults.concat(jobs);
+                                    $scope.jobs = dataResults;
+                                    SqlService.Insert('jmjm1', objjmjm1).then(function (res) {});
+                                }
+                            }
+                        });
+                    }
+
+                });
+            } else {
+                var strSqlFilter = " DeliveryAgentCode='" + sessionStorage.getItem("sessionAgentID") + "'"; // not record
+                SqlService.Select('jmjm1', '*', strSqlFilter).then(function (results) {
+                    if (results.rows.length > 0) {
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var objjmjm1 = getObjjmjm1(results.rows.item(i));
+                            dataResults = dataResults.concat(objjmjm1);
+                        }
+                        $scope.jobs = dataResults;
+                    }
+                });
+            }
+        };
+
+        showjmjm1();
+
     }
 ]);
 app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast',
