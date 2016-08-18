@@ -58,7 +58,11 @@ namespace WebApi.ServiceInterface.TMS
         {
             if (auth.AuthResult(token, uri))
             {
-                if (uri.IndexOf("/tms/jmjm1") > 0)
+                if (uri.IndexOf("/tms/jmjm1/confirm") > 0)
+                {
+                    ecr.data.results = jmjm_logic.ConfirmAll_Jmjm1(request);
+                }
+               else if (uri.IndexOf("/tms/jmjm1") > 0)
                 {
                     ecr.data.results = jmjm_logic.Get_Jmjm1_List(request);
                 }

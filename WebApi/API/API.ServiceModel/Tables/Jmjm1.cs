@@ -11,14 +11,14 @@ namespace WebApi.ServiceModel.Tables
 
         public string JobNo { get; set; }
         public string DeliveryAgentCode { get; set; }
-        public DateTime ETA { get; set; }
+        public string ETA { get; set; }
         public int Pcs { get; set; }
         public string AwbBlNo { get; set; }
         public string UpdatedFlag { get; set; }
         public string Address { get; set; }   
         public string ConsigneeName { get; set; }
-        public DateTime ActualArrivalDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public string ActualArrivalDate { get; set; }
+        public string DeliveryDate { get; set; }
 
     }
 }

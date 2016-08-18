@@ -15,7 +15,7 @@ var checkAgentDatetime = function (datetime) {
         datetime = '';
     }
     if (is.not.empty(datetime)) {
-        datetime = moment(datetime).format('DD-MMM-YYYY HH:mm');
+        datetime = moment(datetime).format('DD-MMM-YYYY HH:mm:SSS');
     }
     return datetime;
 };

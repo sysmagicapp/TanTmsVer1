@@ -199,7 +199,7 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                 controller: 'agentCtrl'
             })
             .state('agentDetail', {
-                url: '/agent/agentjobdetail',
+                url: '/agent/agentjobdetail/:JobNo',
                 cache: 'false',
                 templateUrl: 'view/agent/agentjobdetail.html',
                 controller: 'agentDetailCtrl'

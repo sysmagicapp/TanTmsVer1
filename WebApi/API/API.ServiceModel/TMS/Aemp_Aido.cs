@@ -166,7 +166,7 @@ namespace WebApi.ServiceModel.TMS
                                     }
                                     else
                                     {
-                                        db.Update(request.TableName,
+                                        db.Update(strTableName,
                                           " Remark = '" + Modfunction.SQLSafe(strRemark) + "',StatusCode = '" + strStatusCode + "'",
                                           " DeliveryOrderNo='" + strKey + "'");
                                     }

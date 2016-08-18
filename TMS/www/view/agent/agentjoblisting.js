@@ -44,8 +44,10 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
             }, 1000);
         };
 
-        $scope.goAgentDetail = function () {
-            $state.go('agentDetail', {}, {
+        $scope.goAgentDetail = function (job) {
+            $state.go('agentDetail', {
+                JobNo: job.JobNo,
+            }, {
                 reload: true
             });
         };
@@ -53,11 +55,11 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
         var getObjjmjm1 = function (Objjmjm1) {
             var jobs = {
                 JobNo: Objjmjm1.JobNo,
-                ETA: checkAgentDatetime(Objjmjm1.ETA),
+                ETA: Objjmjm1.ETA,
                 Pcs: Objjmjm1.Pcs,
                 ConsigneeName: Objjmjm1.ConsigneeName,
-                ActualArrivalDate: checkAgentDatetime(Objjmjm1.ActualArrivalDate),
-                DeliveryDate: checkAgentDatetime(Objjmjm1.DeliveryDate),
+                ActualArrivalDate: Objjmjm1.ActualArrivalDate,
+                DeliveryDate: Objjmjm1.DeliveryDate,
             };
             return jobs;
         };
@@ -131,9 +133,89 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
 
     }
 ]);
-app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast',
-    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast) {
-        $scope.returnMain = function () {
+app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast', '$stateParams', '$ionicPlatform', 'SqlService', 'ionicDatePicker', 'ENV', '$cordovaNetwork', 'PopupService',
+    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast, $stateParams, $ionicPlatform, SqlService, ionicDatePicker, ENV, $cordovaNetwork, PopupService) {
+        $scope.Detail = {
+            Jmjm1: {
+                JobNo: $stateParams.JobNo,
+            }
+        };
+
+        $ionicPlatform.ready(function () {
+            var strSqlFilter = "JobNo='" + $scope.Detail.Jmjm1.JobNo + "' ";
+            SqlService.Select('Jmjm1', '*', strSqlFilter).then(function (results) {
+                if (results.rows.length > 0) {
+                    var Objjmjm1 = results.rows.item(0);
+                    var Jmjm1 = {
+                        JobNo: Objjmjm1.JobNo,
+                        ETA: Objjmjm1.ETA,
+                        Pcs: Objjmjm1.Pcs,
+                        AwbBlNo: Objjmjm1.AwbBlNo,
+                        Address: Objjmjm1.Address,
+                        ConsigneeName: Objjmjm1.ConsigneeName,
+                        ActualArrivalDate: Objjmjm1.ActualArrivalDate,
+                        DeliveryDate: Objjmjm1.DeliveryDate,
+                    };
+                    $scope.Detail.Jmjm1 = Jmjm1;
+
+                }
+            });
+        });
+
+        $scope.OnDatePicker = function (Type) {
+            var ipObj1 = {
+                callback: function (val) { //Mandatory
+                    // console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+                    console.log(new Date());
+                    if (is.equal(Type, 1)) {
+                        $scope.Detail.Jmjm1.ActualArrivalDate = moment(new Date(val)).format('YYYY-MM-DD') + moment(new Date()).format(' HH:mm:ss:SSS');
+                    } else {
+                        $scope.Detail.Jmjm1.DeliveryDate = moment(new Date(val)).format('YYYY-MM-DD') + moment(new Date()).format(' HH:mm:ss:SSS');
+                    }
+
+                },
+
+            };
+            ionicDatePicker.openDatePicker(ipObj1);
+        };
+
+        $scope.gotoConfirm = function () {
+            var UpdatedValue = 'Y';
+            if (!ENV.fromWeb) {
+                if (is.not.equal($cordovaNetwork.getNetwork(), 'wifi')) {
+                    ENV.wifi = false;
+                    UpdatedValue = 'N';
+                } else {
+                    ENV.wifi = true;
+                }
+            }
+            var jmjm1Filter = "JobNo='" + $scope.Detail.Jmjm1.JobNo + "'"; // not record
+            var objJmjm1 = {
+                ActualArrivalDate: $scope.Detail.Jmjm1.ActualArrivalDate,
+                DeliveryDate: $scope.Detail.Jmjm1.DeliveryDate,
+                UpdatedFlag: UpdatedValue
+            };
+            SqlService.Update('Jmjm1', objJmjm1, jmjm1Filter).then(function (res) {
+                if (UpdatedValue === 'Y' && is.not.undefined(res)) {
+                    var arrJmjm1 = [];
+                    arrJmjm1.push($scope.Detail.Jmjm1);
+                    var jsonData = {
+                        "confirmAllString": JSON.stringify(arrJmjm1)
+                    };
+                    var objUri = ApiService.Uri(true, '/api/tms/jmjm1/confirm');
+                    ApiService.Post(objUri, jsonData, true).then(function success(result) {
+                        PopupService.Info(null, 'Confirm Success', '').then(function (res) {
+                            $scope.returnList();
+                        });
+                    });
+                } else if (UpdatedValue === 'N') {
+                    PopupService.Info(null, 'Confirm Success', '').then(function (res) {
+                        $scope.returnList();
+                    });
+                }
+            });
+        };
+        $scope.returnList = function () {
             $state.go('agentjobListing', {}, {
                 reload: true
             });

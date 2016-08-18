@@ -57,7 +57,7 @@ appFactory.factory('TABLE_DB', function () {
             ETA: 'TEXT',
             Pcs: 'INT',
             AwbBlNo: 'TEXT',
-            UpdatedFlag: 'TEXT',
+            UpdatedFlag : 'TEXT',
             Address: 'TEXT',
             ConsigneeName: 'TEXT',
             ActualArrivalDate: 'TEXT',
