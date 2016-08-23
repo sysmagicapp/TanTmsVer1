@@ -133,14 +133,35 @@ app.controller('agentCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$
 
     }
 ]);
-app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast', '$stateParams', '$ionicPlatform', 'SqlService', 'ionicDatePicker', 'ENV', '$cordovaNetwork', 'PopupService',
-    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast, $stateParams, $ionicPlatform, SqlService, ionicDatePicker, ENV, $cordovaNetwork, PopupService) {
+app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSms', '$cordovaToast', '$stateParams', '$ionicPlatform', 'SqlService', 'ionicDatePicker', 'ENV', '$cordovaNetwork', 'PopupService', 'ionicTimePicker',
+    function ($scope, $state, ApiService, $cordovaSms, $cordovaToast, $stateParams, $ionicPlatform, SqlService, ionicDatePicker, ENV, $cordovaNetwork, PopupService, ionicTimePicker) {
         $scope.Detail = {
             Jmjm1: {
                 JobNo: $stateParams.JobNo,
-            }
+                showActualArrivalDate: '',
+                showDeliveryDate: '',
+                showActualArrivalTime: '',
+                showDeliveryTime: ''
+            },
+
         };
 
+        var checkDateTime = function (obj, type) {
+            if (obj === null) {
+                return '';
+            } else {
+                if (type === '0') {
+                    return obj.split(' ')[0];
+                } else if (type === '1') {
+                    if (obj.indexOf(' ') > 0) {
+                        return obj.split(' ')[1];
+                    } else {
+                        return '';
+                    }
+                }
+                return obj;
+            }
+        };
         $ionicPlatform.ready(function () {
             var strSqlFilter = "JobNo='" + $scope.Detail.Jmjm1.JobNo + "' ";
             SqlService.Select('Jmjm1', '*', strSqlFilter).then(function (results) {
@@ -155,6 +176,10 @@ app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSm
                         ConsigneeName: Objjmjm1.ConsigneeName,
                         ActualArrivalDate: Objjmjm1.ActualArrivalDate,
                         DeliveryDate: Objjmjm1.DeliveryDate,
+                        showActualArrivalDate: checkDateTime(Objjmjm1.ActualArrivalDate, '0'),
+                        showDeliveryDate: checkDateTime(Objjmjm1.DeliveryDate, '0'),
+                        showActualArrivalTime: checkDateTime(Objjmjm1.ActualArrivalDate, '1'),
+                        showDeliveryTime: checkDateTime(Objjmjm1.DeliveryDate, '1'),
                     };
                     $scope.Detail.Jmjm1 = Jmjm1;
 
@@ -162,17 +187,41 @@ app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSm
             });
         });
 
+        $scope.OnTimePicker = function (Type) {
+            var ipObj1 = {
+                callback: function (val) { //Mandatory
+                    if (typeof (val) === 'undefined') {
+                        // console.log('Time not selected');
+                    } else {
+                        var selectedTime = new Date(val * 1000);
+                        // console.log('Selected epoch is : ', val, 'and the time is ', selectedTime.getUTCHours(), 'H :', selectedTime.getUTCMinutes(), 'M');
+                        var Time = '' + selectedTime.getUTCHours() + ':' + selectedTime.getUTCMinutes();
+                        if (is.equal(Type, 1)) {
+                            $scope.Detail.Jmjm1.showActualArrivalTime = Time;
+                        } else {
+                            $scope.Detail.Jmjm1.showDeliveryTime = Time;
+                        }
+                    }
+                },
+                inputTime: 50400, //Optional
+                format: 12, //Optional
+                step: 5, //Optional
+                setLabel: 'Set' //Optional
+            };
+
+            ionicTimePicker.openTimePicker(ipObj1);
+        };
+
         $scope.OnDatePicker = function (Type) {
             var ipObj1 = {
                 callback: function (val) { //Mandatory
-                    // console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-                    console.log(new Date());
                     if (is.equal(Type, 1)) {
-                        $scope.Detail.Jmjm1.ActualArrivalDate = moment(new Date(val)).format('YYYY-MM-DD') + moment(new Date()).format(' HH:mm:ss:SSS');
+                        $scope.Detail.Jmjm1.showActualArrivalDate = moment(new Date(val)).format('YYYY-MM-DD');
+                        $scope.Detail.Jmjm1.showActualArrivalTime = moment(new Date()).format('HH:mm');
                     } else {
-                        $scope.Detail.Jmjm1.DeliveryDate = moment(new Date(val)).format('YYYY-MM-DD') + moment(new Date()).format(' HH:mm:ss:SSS');
+                        $scope.Detail.Jmjm1.showDeliveryDate = moment(new Date(val)).format('YYYY-MM-DD');
+                        $scope.Detail.Jmjm1.showDeliveryTime = moment(new Date()).format('HH:mm');
                     }
-
                 },
 
             };
@@ -190,6 +239,15 @@ app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSm
                 }
             }
             var jmjm1Filter = "JobNo='" + $scope.Detail.Jmjm1.JobNo + "'"; // not record
+            $scope.Detail.Jmjm1.ActualArrivalDate = $scope.Detail.Jmjm1.showActualArrivalDate + ' ' + $scope.Detail.Jmjm1.showActualArrivalTime;
+            if (is.empty($scope.Detail.Jmjm1.showActualArrivalDate)) {
+                $scope.Detail.Jmjm1.ActualArrivalDate = null;
+            }
+            $scope.Detail.Jmjm1.DeliveryDate = $scope.Detail.Jmjm1.showDeliveryDate + ' ' + $scope.Detail.Jmjm1.showDeliveryTime;
+            if (is.empty($scope.Detail.Jmjm1.showDeliveryDate)) {
+                $scope.Detail.Jmjm1.DeliveryDate = null;
+            }
+
             var objJmjm1 = {
                 ActualArrivalDate: $scope.Detail.Jmjm1.ActualArrivalDate,
                 DeliveryDate: $scope.Detail.Jmjm1.DeliveryDate,
@@ -214,6 +272,7 @@ app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSm
                     });
                 }
             });
+
         };
         $scope.returnList = function () {
             $state.go('agentjobListing', {}, {

@@ -3,6 +3,7 @@ var app = angular.module('TMS', [
     'ionic',
     'ionicLazyLoad',
     'ionic-datepicker',
+    'ionic-timepicker',
     'angularFileUpload',
     'jett.ionic.filter.bar',
     'ionic.ion.headerShrink',

@@ -171,9 +171,9 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
         };
 
         $scope.cancelJmjm3s = [{
-              text: 'Sender / Receiver Not In',
-              value: 'SenderWithReceiver'
-          }, {
+            text: 'Sender / Receiver Not In',
+            value: 'SenderWithReceiver'
+        }, {
             text: 'Address Not Correct',
             value: 'Address'
         }, {

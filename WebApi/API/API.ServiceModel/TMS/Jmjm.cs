@@ -29,17 +29,16 @@ namespace WebApi.ServiceModel.TMS
                 using (var db = DbConnectionFactory.OpenDbConnection("TMS"))
                 {
                     string strSql = "";
-                    string strWhere = " Where ( (select aeaw1.ArrivalDateTime from aeaw1 where aeaw1.JobNo=jmjm1.JobNo ) >=  getdate() "+
-                                      "  or  (select aeaw1.ArrivalDateTime from aeaw1 where aeaw1.JobNo=jmjm1.JobNo ) ='' "+
-                                      "  or (select aeaw1.ArrivalDateTime from aeaw1 where aeaw1.JobNo=jmjm1.JobNo ) is null ) " +
-                                      " And ModuleCode='AE' "+
-                                      " And DeliveryAgentCode ='" + request.DeliveryAgentCode + "' ";
-                             strSql = " select  JobNo, DeliveryAgentCode,CONVERT(varchar(100), ETA, 21) as ETA , Pcs, AwbBlNo, '' as UpdatedFlag," +
-                                      " (select isnull(aeaw1.ConsigneeAddress1,'') + isnull(aeaw1.ConsigneeAddress2,'') + isnull(ConsigneeAddress3,'') +isnull(aeaw1.ConsigneeAddress4,'') from aeaw1 where aeaw1.JobNo=jmjm1.JobNo  ) as Address," +
-                                      " ConsigneeName ,CONVERT(varchar(100), (select top 1 Jmjm3.DateTime from jmjm3 where Jmjm3.JobNo=Jmjm1.JobNo and Jmjm3.Description = 'ACTUAL ARRIVAL DATE' order by Jmjm3.lineItemNo desc ), 21)  as  ActualArrivalDate, " +
-                                      " CONVERT(varchar(100), (select aeaw1.ArrivalDateTime from aeaw1 where aeaw1.JobNo=jmjm1.JobNo ), 21) as DeliveryDate " +
-                                      " from jmjm1 "+ strWhere + " ";
-                                Result = db.Select<Jmjm1>(strSql);
+                    string strWhere = " Where (DeliveryDateTime >=  getdate() " +
+                                      "  or  DeliveryDateTime is null) " +                              
+                                      " And ModuleCode='AE' " +
+                                      " And DeliveryAgentCode is not null And DeliveryAgentCode !='' And DeliveryAgentCode ='" + request.DeliveryAgentCode + "' ";
+                    strSql = " select  JobNo, DeliveryAgentCode,CONVERT(varchar(16), ETA, 20) as ETA , Pcs, AwbBlNo, '' as UpdatedFlag," +
+                             " (select isnull(aeaw1.ConsigneeAddress1,'') + isnull(aeaw1.ConsigneeAddress2,'') + isnull(ConsigneeAddress3,'') +isnull(aeaw1.ConsigneeAddress4,'') from aeaw1 where aeaw1.JobNo=jmjm1.JobNo  ) as Address," +
+                             " ConsigneeName ,CONVERT(varchar(16), (select top 1  Jmjm3.DateTime   from jmjm3 where Jmjm3.JobNo=Jmjm1.JobNo and Jmjm3.Description = 'ACTUAL ARRIVAL DATE' order by Jmjm3.lineItemNo desc ), 20)  as  ActualArrivalDate, " +
+                             " CONVERT(varchar(16),DeliveryDateTime, 20) as DeliveryDate " +
+                             " from jmjm1 " + strWhere + " ";
+                    Result = db.Select<Jmjm1>(strSql);
 
                 }
             }
@@ -59,25 +58,26 @@ namespace WebApi.ServiceModel.TMS
                         if (ja != null)
                         {
                             for (int i = 0; i < ja.Count(); i++)
-                            {                                                        
-                                    string strJobNo = "";
+                            {
+                                string strJobNo = "";
                                 string strActualArrivalDate = "";
                                 string strDeliveryDate = "";
                                 if (ja[i]["JobNo"] != null || ja[i]["JobNo"].ToString() != "")
-                                        strJobNo = ja[i]["JobNo"].ToString();
-                                          strActualArrivalDate = ja[i]["ActualArrivalDate"].ToString();
-                                         strDeliveryDate = ja[i]["DeliveryDate"].ToString();
+                                strJobNo = ja[i]["JobNo"].ToString();
+                                strActualArrivalDate = ja[i]["ActualArrivalDate"].ToString();
+                                strDeliveryDate = ja[i]["DeliveryDate"].ToString();
                                 if (strJobNo != "")
-                                    {
-
+                                {
+                                    if (strActualArrivalDate != "") {
                                     db.Update("Jmjm3",
                                       " DateTime = '" + Modfunction.SQLSafe(strActualArrivalDate) + "'",
                                       " JobNo='" + strJobNo + "' and Description = 'ACTUAL ARRIVAL DATE'");
-
-                                    db.Update("Aeaw1",
-                                      " ArrivalDateTime = '" + Modfunction.SQLSafe(strDeliveryDate) + "'",
-                                              " JobNo='" + strJobNo + "'");
-
+                                    }
+                                    if (strDeliveryDate != "") { 
+                                    db.Update("Jmjm1",
+                                      " DeliveryDateTime = '" + Modfunction.SQLSafe(strDeliveryDate) + "'",
+                                      " JobNo='" + strJobNo + "'");
+                                    }
                                 }
                             }
                             Result = 1;
