@@ -275,7 +275,7 @@ app.controller('agentDetailCtrl', ['$scope', '$state', 'ApiService', '$cordovaSm
 
         };
         $scope.returnList = function () {
-            $state.go('agentjobListing', {}, {
+            $state.go('index.agentjobListing', {}, {
                 reload: true
             });
         };

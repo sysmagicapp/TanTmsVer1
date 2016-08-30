@@ -342,7 +342,7 @@ app.controller('JoblistingDetailCtrl', ['ENV', '$scope', '$state', '$ionicAction
             $scope.modal_camera.hide();
         };
         $scope.returnList = function () {
-            $state.go('jobListingList', {}, {
+            $state.go('index.jobListingList', {}, {
                 reload: true
             });
         };
@@ -464,7 +464,7 @@ app.controller('JoblistingConfirmCtrl', ['ENV', '$scope', '$state', '$stateParam
 
         };
         $scope.returnList = function () {
-            $state.go('jobListingList', {}, {});
+            $state.go('index.jobListingList', {}, {});
         };
         $scope.returnDetail = function () {
             $state.go('jobListingDetail', {

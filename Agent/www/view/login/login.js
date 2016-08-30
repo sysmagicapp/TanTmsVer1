@@ -7,8 +7,8 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
             strAgentID: '',
             strPassWord: '',
             strRole: '',
-            CurRole: '1',
-            NewRole: '1'
+            CurRole: '2',
+            NewRole: '2'
         };
 
         $scope.roles = [{
@@ -127,9 +127,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                                 PassWord: $scope.logininfo.strPassWord
                             };
                             SqlService.Insert('Todr1_Rcbp1', objTodr1_Rcbp1).then(function (res) {});
-                            $state.go('index.main', {}, {
-                                reload: true
-                            });
+                            $state.go('index.agentjobListing', {}, {});
                             $rootScope.$broadcast('login');
                         } else {
                             PopupService.Alert(null, 'Invalid Agent.');
@@ -140,9 +138,9 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
         };
 
         if (window.cordova) {
-            $scope.logininfo.strRole = 'Driver';
+            $scope.logininfo.strRole = 'Agent';
         } else {
-            $scope.logininfo.strRole = 'Driver';
+            $scope.logininfo.strRole = 'Agent';
         }
 
         $('#iDriverID').on('keydown', function (e) {
@@ -168,9 +166,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             sessionStorage.clear();
                             sessionStorage.setItem('sessionAgentID', objTodr1_Rcbp1.BusinessPartyCode);
                             sessionStorage.setItem('sessionPassWord', objTodr1_Rcbp1.PassWord);
-                            $state.go('index.main', {}, {
-                                reload: true
-                            });
+                            $state.go('index.agentjobListing', {}, {});
                         }
 
                     }

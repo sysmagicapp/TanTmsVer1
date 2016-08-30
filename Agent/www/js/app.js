@@ -178,12 +178,6 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-            .state('googleMaps', {
-                url: '/googleMaps/googleMaps',
-                cache: 'false',
-                templateUrl: 'view/googleMaps/googleMaps.html',
-                controller: 'GoogleMapCtrl'
-            })
             .state('index.setting', {
                 url: '/setting/setting',
                 views: {
@@ -193,11 +187,14 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-            .state('agentjobListing', {
-                url: '/agent/agentjoblisting',
-                cache: 'false',
-                templateUrl: 'view/agent/agentjoblisting.html',
-                controller: 'agentCtrl'
+            .state('index.agentjobListing', {
+                url: '/agentjoblisting',
+                views: {
+                    'menuContent': {
+                        templateUrl: "view/agent/agentjoblisting.html",
+                        controller: 'agentCtrl'
+                    }
+                }
             })
             .state('agentDetail', {
                 url: '/agent/agentjobdetail/:JobNo',
@@ -214,23 +211,6 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-            .state('jobListingList', {
-                url: '/joblisting/list',
-                cache: 'false',
-                templateUrl: 'view/joblisting/list.html',
-                controller: 'JoblistingListCtrl'
-            })
-            .state('jobListingDetail', {
-                url: '/joblisting/detail/:key',
-                cache: 'false',
-                templateUrl: 'view/joblisting/detail.html',
-                controller: 'JoblistingDetailCtrl'
-            })
-            .state('upload', {
-                url: '/Upload/:Key/:TableName',
-                templateUrl: 'view/joblisting/Upload.html',
-                controller: 'UploadCtrl'
-            })
             .state('goDriverCodeCtrl', {
                 url: '/login',
                 views: {
@@ -239,24 +219,6 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                         controller: 'goDriverCodeCtrl'
                     }
                 }
-            })
-            .state('dailycompleted', {
-                url: '/dailycompleted/dailylist',
-                cache: 'false',
-                templateUrl: 'view/dailycompleted/dailylist.html',
-                controller: 'dailycompletedCtrl'
-            })
-            .state('jobListingConfirm', {
-                url: '/joblisting/confirm/:key',
-                cache: 'false',
-                templateUrl: 'view/joblisting/confirm.html',
-                controller: 'JoblistingConfirmCtrl'
-            })
-            .state('reports', {
-                url: '/reports',
-                cache: 'false',
-                templateUrl: 'view/reports/list.html',
-                controller: 'reportsListCtrl'
             });
         $urlRouterProvider.otherwise('/splash');
         /*

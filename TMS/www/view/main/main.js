@@ -14,10 +14,11 @@ app.controller( 'MainCtrl', [ '$scope', '$state', '$ionicPopup','PopupService',
             PopupService.Info( null,'Stay Tuned' );
         };
         $scope.func_JL = function () {
-            $state.go( 'jobListingList', {}, {} );
+            $state.go( 'index.jobListingList', {}, {} );
         };
         $scope.func_DC = function () {
-            $state.go( 'agentjobListing', {}, {} );
+          PopupService.Info( null,'Stay Tuned' );
+          // $state.go( 'agentjobListing', {}, {} );
         };
         $scope.func_Reports = function () {
               $state.go( 'dailycompleted', {}, {} );

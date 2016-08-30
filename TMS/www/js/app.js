@@ -214,11 +214,14 @@ app.config(['ENV', '$stateProvider', '$urlRouterProvider', '$ionicConfigProvider
                     }
                 }
             })
-            .state('jobListingList', {
-                url: '/joblisting/list',
-                cache: 'false',
-                templateUrl: 'view/joblisting/list.html',
-                controller: 'JoblistingListCtrl'
+            .state('index.jobListingList', {
+                url: '/jobListingList',
+                views: {
+                    'menuContent': {
+                        templateUrl: "view/joblisting/list.html",
+                        controller: 'JoblistingListCtrl'
+                    }
+                }
             })
             .state('jobListingDetail', {
                 url: '/joblisting/detail/:key',

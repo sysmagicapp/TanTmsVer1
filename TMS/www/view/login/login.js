@@ -79,7 +79,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                                 DriverCode: $scope.logininfo.strdriverID,
                             };
                             SqlService.Insert('Todr1_Rcbp1', objTodr1_Rcbp1).then(function (res) {});
-                            $state.go('index.main', {}, {
+                            $state.go('index.jobListingList', {}, {
                                 reload: true
                             });
                             $rootScope.$broadcast('login');
@@ -127,7 +127,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                                 PassWord: $scope.logininfo.strPassWord
                             };
                             SqlService.Insert('Todr1_Rcbp1', objTodr1_Rcbp1).then(function (res) {});
-                            $state.go('index.main', {}, {
+                            $state.go('index.jobListingList', {}, {
                                 reload: true
                             });
                             $rootScope.$broadcast('login');
@@ -159,7 +159,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             $rootScope.$broadcast('login');
                             sessionStorage.clear();
                             sessionStorage.setItem('sessionDriverCode', objTodr1_Rcbp1.DriverCode);
-                            $state.go('index.main', {}, {
+                            $state.go('index.jobListingList', {}, {
                                 reload: true
                             });
                         } else {
@@ -168,7 +168,7 @@ app.controller('LoginCtrl', ['ENV', '$scope', '$http', '$state', '$stateParams',
                             sessionStorage.clear();
                             sessionStorage.setItem('sessionAgentID', objTodr1_Rcbp1.BusinessPartyCode);
                             sessionStorage.setItem('sessionPassWord', objTodr1_Rcbp1.PassWord);
-                            $state.go('index.main', {}, {
+                            $state.go('index.jobListingList', {}, {
                                 reload: true
                             });
                         }

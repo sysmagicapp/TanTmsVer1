@@ -45,44 +45,28 @@
     <script src="view/menu/menu.js"></script>
     <script src="view/login/login.js"></script>
     <script src="view/main/main.js"></script>
-    <script src="view/joblisting/joblisting.js"></script>
     <script src="view/setting/setting.js"></script>
     <script src="view/updateApp/update.js"></script>
-    <script src="view/reports/reports.js"></script>
     <script src="view/agent/agentjoblisting.js"></script>
-    <script src="view/googleMaps/googleMaps.js"></script>
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
-    <script src="view/dailycompleted/dailycompleted.js"></script>
     <!-- <script src="http://maps.google.com/maps/api/js?key=AIzaSyAGntBqvv-HLVxBC0MQc8ugh1pc4wWz2AQ"></script> -->
     <script>
         moment.locale('en');
     </script>
     <script type="text/javascript" src="https://dn-bughd-web.qbox.me/bughd.min.js" crossOrigin="anonymous"></script>
     <script type="text/javascript">
-        if (navigator.onLine) {
-            jQuery.ajax({
-                url: '//freegeoip.net/json/',
-                type: 'POST',
-                dataType: 'jsonp',
-                success: function(location) {
-                    if (location.country_code === 'CN') {} else {
-                        document.write('<scr' + 'ipt  src="http://maps.google.com/maps/api/js?key=AIzaSyAGntBqvv-HLVxBC0MQc8ugh1pc4wWz2AQ"></scr' + 'ipt>');
-                    }
-                }
-            });
-        }
         window.bughd = window.bughd || function() {};
         bughd("create", {
             key: "bc502e92c968dcffad41bfba3fbb99ce"
         });
         bughd("website", {
-            name: "TMS-JollyB"
+            name: "TMS-TanAgent"
         });
     </script>
     <!-- endbuild -->
 </head>
 
-<body ng-app="TMS" ng-cloak>
+<body ng-app="TanAgent" ng-cloak>
     <ion-nav-view></ion-nav-view>
 </body>
 
